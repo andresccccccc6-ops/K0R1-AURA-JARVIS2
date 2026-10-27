@@ -841,4 +841,227 @@ s.</p></div></div></section></p></div></div></section>
 <!-- FIN DEL PANEL K0R1 -->
 
 <!-- FIN PANEL K0R1 AURA -->
+</body>
+</html>
+<!-- K0R1 AURA - HUD NEON ADD-ON -->
+<style>
+#k0r1-hud {
+  --violet: #a855f7;
+  --electric: #2563ff;
+  --cyan: #22d3ee;
+  margin: 24px auto;
+  padding: 22px;
+  max-width: 1200px;
+  color: #eef2ff;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at 10% 0%, #32105b88, transparent 45%),
+    radial-gradient(ellipse at 100% 100%, #063b6b55, transparent 40%),
+    #050817;
+  border: 1px solid #6439a8;
+  border-radius: 18px;
+  box-shadow: 0 0 25px #7c3aed22;
+}
+#k0r1-hud * { box-sizing: border-box; }
+#k0r1-hud .hud-top {
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:14px; padding-bottom:18px;
+  border-bottom:1px solid #39265e;
+}
+#k0r1-hud .hud-brand {
+  font-size:26px; font-weight:900; letter-spacing:3px;
+  color:#c084fc; text-shadow:0 0 18px #9333ea;
+}
+#k0r1-hud .hud-live {
+  color:#5eead4; font-size:12px; letter-spacing:1px;
+}
+#k0r1-hud .hud-live:before {
+  content:""; display:inline-block; width:8px; height:8px;
+  margin-right:8px; border-radius:50%; background:#34d399;
+  box-shadow:0 0 12px #34d399;
+}
+#k0r1-hud .hud-hero {
+  display:grid; grid-template-columns:1fr 1fr; align-items:center;
+  gap:24px; padding:30px 4px;
+}
+#k0r1-hud .hud-eyebrow {
+  font-size:11px; color:var(--cyan); letter-spacing:4px;
+}
+#k0r1-hud h2 {
+  font-size:clamp(32px,6vw,58px); line-height:1.05;
+  margin:12px 0;
+  background:linear-gradient(90deg,#fff,#c084fc,#22d3ee);
+  color:transparent; background-clip:text;
+}
+#k0r1-hud p { color:#b8c6e8; line-height:1.7; }
+#k0r1-hud .hud-orb {
+  width:min(230px,65vw); aspect-ratio:1; margin:auto;
+  display:grid; place-items:center; border-radius:50%;
+  border:2px solid #4f46e5;
+  background:radial-gradient(circle,#172554,#080b1a 68%);
+  box-shadow:0 0 25px #7c3aed, inset 0 0 25px #0891b2;
+  animation:hud-pulse 4s ease-in-out infinite;
+}
+#k0r1-hud .hud-orb span {
+  font-size:36px; font-weight:900; color:#c4b5fd;
+  text-shadow:0 0 18px #8b5cf6;
+}
+#k0r1-hud .hud-orb small {
+  display:block; text-align:center; color:#22d3ee;
+  letter-spacing:5px; font-size:11px;
+}
+#k0r1-hud .hud-stats {
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px;
+}
+#k0r1-hud .hud-stat {
+  padding:16px; border:1px solid #344b87;
+  border-radius:12px; background:#0a1125;
+}
+#k0r1-hud .hud-stat small { color:#9caed2; display:block; }
+#k0r1-hud .hud-stat strong {
+  display:block; margin-top:8px; color:#67e8f9; font-size:19px;
+}
+#k0r1-hud .hud-actions {
+  display:flex; flex-wrap:wrap; gap:10px; margin:22px 0;
+}
+#k0r1-hud button {
+  color:#f8fafc; background:#10152d; border:1px solid #6444ba;
+  border-radius:10px; padding:12px 16px; cursor:pointer;
+  transition:transform .2s, box-shadow .2s, background .2s;
+}
+#k0r1-hud button:hover {
+  transform:translateY(-2px); background:#31205b;
+  box-shadow:0 0 16px #7c3aed55;
+}
+#k0r1-hud .hud-primary {
+  background:linear-gradient(90deg,#7c3aed,#2563eb);
+  border:0; font-weight:700;
+}
+#k0r1-hud .hud-output {
+  min-height:52px; padding:14px; border:1px solid #164e83;
+  border-radius:10px; background:#07172b; color:#a5f3fc;
+  overflow-wrap:anywhere; line-height:1.6;
+}
+#k0r1-hud .hud-bottom {
+  margin-top:18px; color:#7f8eb2; font-size:11px;
+  text-align:center;
+}
+@keyframes hud-pulse {
+  0%,100% { transform:scale(1); box-shadow:0 0 22px #7c3aed66,inset 0 0 25px #0891b255; }
+  50% { transform:scale(1.025); box-shadow:0 0 34px #2563eb99,inset 0 0 35px #0891b277; }
+}
+@media(max-width:650px) {
+  #k0r1-hud { padding:15px; }
+  #k0r1-hud .hud-hero { grid-template-columns:1fr; }
+  #k0r1-hud .hud-stats { grid-template-columns:1fr; }
+}
+@media(prefers-reduced-motion:reduce) {
+  #k0r1-hud .hud-orb { animation:none; }
+  #k0r1-hud button { transition:none; }
+}
+</style>
+
+<section id="k0r1-hud">
+  <header class="hud-top">
+    <div class="hud-brand">♛ K0R1 AURA</div>
+    <div class="hud-live">INTERFAZ WEB ACTIVA</div>
+    <div id="hud-clock">--:--:--</div>
+  </header>
+
+  <div class="hud-hero">
+    <div>
+      <div class="hud-eyebrow">PERSONAL CONTROL INTERFACE</div>
+      <h2>EL FUTURO<br>ES AHORA.</h2>
+      <p>
+        Un centro de control con estilo futurista,
+        accesos rápidos y herramientas de K0R1.
+      </p>
+      <div class="hud-actions">
+        <button class="hud-primary" data-hud="versiones">Explorar versiones ↗</button>
+        <button data-hud="hora">Actualizar reloj ⟳</button>
+      </div>
+    </div>
+    <div class="hud-orb">
+      <div><span>K0R1</span><small>A U R A</small></div>
+    </div>
+  </div>
+
+  <div class="hud-stats">
+    <div class="hud-stat">
+      <small>ESTADO DE LA INTERFAZ</small>
+      <strong>EN LÍNEA</strong>
+    </div>
+    <div class="hud-stat">
+      <small>HORA LOCAL DEL NAVEGADOR</small>
+      <strong id="hud-time">--:--:--</strong>
+    </div>
+    <div class="hud-stat">
+      <small>EDICIÓN</small>
+      <strong>AURA WEB</strong>
+    </div>
+  </div>
+
+  <div style="margin-top:20px">
+    <div class="hud-eyebrow" style="margin-bottom:12px">ACCESOS RÁPIDOS</div>
+    <div class="hud-actions">
+      <button data-hud="tienda">🛒 Tienda</button>
+      <button data-hud="funciones">⚙ Funciones</button>
+      <button data-hud="pedidos">◈ Pedidos</button>
+      <button data-hud="arriba">↑ Inicio</button>
+    </div>
+  </div>
+
+  <div id="hud-output" class="hud-output" role="status" aria-live="polite">
+    K0R1 listo. Selecciona un acceso rápido.
+  </div>
+  <footer class="hud-bottom">
+    K0R1 AURA · PANEL HUD · Diseño adaptable
+  </footer>
+</section>
+
+<script>
+(() => {
+  const hud = document.getElementById("k0r1-hud");
+  if (!hud || hud.dataset.ready) return;
+  hud.dataset.ready = "1";
+
+  const output = hud.querySelector("#hud-output");
+
+  function updateClock() {
+    const now = new Date().toLocaleTimeString();
+    hud.querySelector("#hud-clock").textContent = now;
+    hud.querySelector("#hud-time").textContent = now;
+  }
+  updateClock();
+  hud.querySelector('[data-hud="hora"]').addEventListener("click", () => {
+    updateClock();
+    output.textContent = "Reloj actualizado con la hora local de tu navegador.";
+  });
+
+  const targets = {
+    versiones: ["ka-store", "Sección de versiones"],
+    tienda: ["ka-store", "Tienda"],
+    funciones: ["ka-features", "Funciones"],
+    pedidos: ["ka-order", "Centro de pedidos"],
+    arriba: ["k0r1-aura", "Inicio de K0R1"]
+  };
+
+  hud.querySelectorAll("[data-hud]").forEach(button => {
+    if (button.dataset.hud === "hora") return;
+    button.addEventListener("click", () => {
+      const item = targets[button.dataset.hud];
+      const target = item && document.getElementById(item[0]);
+      if (target) {
+        target.scrollIntoView({behavior:"smooth", block:"start"});
+        output.textContent = "Abriendo sección: " + item[1] + ".";
+      } else {
+        output.textContent =
+          "Acceso seleccionado: " + button.textContent.trim() +
+          ". Si no existe esa sección en tu página, conecta el botón a su sección real.";
+      }
+    });
+  });
+})();
+</script>
+<!-- FIN K0R1 HUD ADD-ON -->
 
