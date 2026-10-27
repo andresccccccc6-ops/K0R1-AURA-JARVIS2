@@ -30,3 +30,283 @@ s.</p></div></div></section></p></div></div></section>
 <section id="seguridad" class="wrap"><div class="eyebrow">Uso responsable</div><h2 class="section-title">Transparencia y seguridad</h2><p class="section-sub">Revisa el código antes de ejecutarlo, conserva copias de seguridad y evita publicar información privada. No se garantiza un aumento específico de FPS. Proyecto independiente, no afiliado a Microsoft ni a Epic Games.</p></section>
 </main><footer><div class="wrap">© <span id="year"></span> K0R1 AURA JARVIS · Proyecto independiente.</div></footer><script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body></html>
+<!-- K0R1 AURA JARVIS - TIENDA DIGITAL -->
+<section id="tienda-k0r1" class="wrap" style="padding:50px 20px;color:#fff">
+  <div class="eyebrow">K0R1 STORE</div>
+  <h2 class="section-title">Tienda digital</h2>
+  <p class="section-sub">
+    Explora los programas y agrega tus productos al carrito.
+  </p>
+
+  <style>
+    #tienda-k0r1 .store-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+      margin:24px 0;
+    }
+    #tienda-k0r1 .store-card,
+    #tienda-k0r1 .cart-box {
+      background:rgba(15,18,40,.92);
+      border:1px solid #34345f;
+      border-radius:16px;
+      padding:20px;
+    }
+    #tienda-k0r1 .store-card h3 { margin-top:0; }
+    #tienda-k0r1 .store-price {
+      color:#a99cff;
+      font-size:24px;
+      font-weight:800;
+      margin:16px 0;
+    }
+    #tienda-k0r1 .store-btn {
+      background:#7257ff;
+      color:white;
+      border:0;
+      padding:11px 15px;
+      border-radius:9px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    #tienda-k0r1 .store-btn:hover { background:#8b76ff; }
+    #tienda-k0r1 .cart-line {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:12px 0;
+      border-bottom:1px solid #34345f;
+    }
+    #tienda-k0r1 .cart-line button {
+      cursor:pointer;
+      margin-left:6px;
+    }
+    #tienda-k0r1 .store-muted { color:#b9bad3; }
+    #tienda-k0r1 input {
+      width:100%;
+      box-sizing:border-box;
+      padding:12px;
+      margin:6px 0 14px;
+      border-radius:8px;
+      border:1px solid #454568;
+      background:#101329;
+      color:white;
+    }
+    #tienda-k0r1 .store-total {
+      font-size:22px;
+      font-weight:800;
+      margin:18px 0;
+    }
+  </style>
+
+  <div id="k0r1-products" class="store-grid"></div>
+
+  <div class="cart-box">
+    <h3>🛒 Tu carrito</h3>
+    <div id="k0r1-cart" aria-live="polite">
+      <p class="store-muted">Tu carrito está vacío.</p>
+    </div>
+    <div class="store-total">
+      Total: <span id="k0r1-total">$0.00 MXN</span>
+    </div>
+
+    <h3>Preparar pedido</h3>
+    <label for="k0r1-customer">Tu nombre</label>
+    <input id="k0r1-customer" maxlength="80"
+           autocomplete="name" placeholder="Nombre">
+
+    <label for="k0r1-email">Tu correo electrónico</label>
+    <input id="k0r1-email" type="email" maxlength="120"
+           autocomplete="email" placeholder="correo@ejemplo.com">
+
+    <button class="store-btn" id="k0r1-order">
+      Preparar pedido por transferencia
+    </button>
+    <p class="store-muted">
+      El pedido no confirma el pago. Espera las instrucciones
+      del vendedor y la confirmación antes de recibir el producto.
+    </p>
+    <p id="k0r1-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<script>
+(() => {
+  // CAMBIA estos productos y precios por los de tu tienda.
+  const products = [
+    {
+      id: "programa1",
+      name: "K0R1 AURA JARVIS",
+      description: "Programa digital para Windows.",
+      price: 99
+    },
+    {
+      id: "programa2",
+      name: "K0R1 PRO",
+      description: "Edición avanzada. Personaliza esta descripción.",
+      price: 149
+    },
+    {
+      id: "programa3",
+      name: "K0R1 ULTIMATE",
+      description: "Paquete digital. Personaliza esta descripción.",
+      price: 199
+    }
+  ];
+
+  // Sustituye por el correo de contacto de tu tienda.
+  const storeEmail = "TU_CORREO@EJEMPLO.COM";
+  const cart = new Map();
+  const money = amount =>
+    new Intl.NumberFormat("es-MX", {
+      style: "currency",
+      currency: "MXN"
+    }).format(amount);
+
+  const productArea = document.getElementById("k0r1-products");
+  const cartArea = document.getElementById("k0r1-cart");
+  const totalArea = document.getElementById("k0r1-total");
+  const statusArea = document.getElementById("k0r1-status");
+
+  function renderProducts() {
+    productArea.replaceChildren();
+
+    products.forEach(product => {
+      const card = document.createElement("article");
+      card.className = "store-card";
+
+      const title = document.createElement("h3");
+      title.textContent = product.name;
+
+      const description = document.createElement("p");
+      description.className = "store-muted";
+      description.textContent = product.description;
+
+      const price = document.createElement("div");
+      price.className = "store-price";
+      price.textContent = money(product.price);
+
+      const button = document.createElement("button");
+      button.className = "store-btn";
+      button.textContent = "Añadir al carrito";
+      button.addEventListener("click", () => {
+        cart.set(product.id, (cart.get(product.id) || 0) + 1);
+        renderCart();
+      });
+
+      card.append(title, description, price, button);
+      productArea.append(card);
+    });
+  }
+
+  function renderCart() {
+    cartArea.replaceChildren();
+    let total = 0;
+    let count = 0;
+
+    products.forEach(product => {
+      const quantity = cart.get(product.id) || 0;
+      if (!quantity) return;
+
+      count += quantity;
+      total += product.price * quantity;
+
+      const line = document.createElement("div");
+      line.className = "cart-line";
+
+      const info = document.createElement("span");
+      info.textContent =
+        `${product.name} × ${quantity} — ${money(product.price * quantity)}`;
+
+      const controls = document.createElement("span");
+
+      const minus = document.createElement("button");
+      minus.textContent = "−";
+      minus.setAttribute("aria-label", "Quitar una unidad");
+      minus.addEventListener("click", () => {
+        if (quantity <= 1) cart.delete(product.id);
+        else cart.set(product.id, quantity - 1);
+        renderCart();
+      });
+
+      const plus = document.createElement("button");
+      plus.textContent = "+";
+      plus.setAttribute("aria-label", "Añadir una unidad");
+      plus.addEventListener("click", () => {
+        cart.set(product.id, quantity + 1);
+        renderCart();
+      });
+
+      const remove = document.createElement("button");
+      remove.textContent = "Eliminar";
+      remove.addEventListener("click", () => {
+        cart.delete(product.id);
+        renderCart();
+      });
+
+      controls.append(minus, plus, remove);
+      line.append(info, controls);
+      cartArea.append(line);
+    });
+
+    if (count === 0) {
+      const empty = document.createElement("p");
+      empty.className = "store-muted";
+      empty.textContent = "Tu carrito está vacío.";
+      cartArea.append(empty);
+    }
+
+    totalArea.textContent = money(total);
+  }
+
+  document.getElementById("k0r1-order").addEventListener("click", () => {
+    statusArea.textContent = "";
+
+    const name = document.getElementById("k0r1-customer").value.trim();
+    const email = document.getElementById("k0r1-email").value.trim();
+
+    if (!cart.size) {
+      statusArea.textContent = "Añade al menos un producto al carrito.";
+      return;
+    }
+
+    if (!name || !email ||
+        !document.getElementById("k0r1-email").checkValidity()) {
+      statusArea.textContent = "Escribe tu nombre y un correo válido.";
+      return;
+    }
+
+    if (storeEmail === "TU_CORREO@EJEMPLO.COM") {
+      statusArea.textContent =
+        "El vendedor debe configurar el correo de contacto en el código.";
+      return;
+    }
+
+    const lines = products
+      .filter(p => cart.has(p.id))
+      .map(p => `${p.name} x ${cart.get(p.id)} = ${
+        money(p.price * cart.get(p.id))
+      }`);
+
+    const total = products.reduce(
+      (sum, p) => sum + p.price * (cart.get(p.id) || 0), 0
+    );
+
+    const subject = encodeURIComponent("Pedido K0R1 AURA JARVIS");
+    const body = encodeURIComponent(
+      `Pedido de: ${name}\nCorreo: ${email}\n\n` +
+      lines.join("\n") +
+      `\n\nTOTAL: ${money(total)}` +
+      "\n\nSolicito instrucciones para realizar la transferencia bancaria."
+    );
+
+    window.location.href =
+      `mailto:${storeEmail}?subject=${subject}&body=${body}`;
+  });
+
+  renderProducts();
+  renderCart();
+})();
+</script>
+<!-- FIN DE LA TIENDA K0R1 -->
+
