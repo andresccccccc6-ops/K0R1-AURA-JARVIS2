@@ -309,4 +309,63 @@ s.</p></div></div></section></p></div></div></section>
 })();
 </script>
 <!-- FIN DE LA TIENDA K0R1 -->
+</body>
+</html>
+<!-- INICIO CHAT DE PEDIDOS K0R1 -->
+<section id="k0r1-chat" style="max-width:650px;margin:30px auto;padding:22px;background:#101020;color:#fff;border:1px solid #6941c6;border-radius:18px;font-family:Arial,sans-serif">
+  <h2 style="color:#b99aff;margin-top:0">K0R1 · Centro de pedidos</h2>
+  <p>Selecciona el producto que compraste y adjunta tu comprobante.</p>
+
+  <label for="k0r1-producto">Producto solicitado</label>
+  <select id="k0r1-producto" style="display:block;width:100%;padding:12px;margin:8px 0 16px;border-radius:8px">
+    <option value="K0R1 AURA JARVIS">K0R1 AURA JARVIS</option>
+    <option value="K0R1 PRO">K0R1 PRO</option>
+    <option value="K0R1 ULTIMATE">K0R1 ULTIMATE</option>
+  </select>
+
+  <label for="k0r1-correo">Tu correo para recibir respuesta</label>
+  <input id="k0r1-correo" type="email" placeholder="tucorreo@ejemplo.com"
+    style="display:block;box-sizing:border-box;width:100%;padding:12px;margin:8px 0 16px;border-radius:8px">
+
+  <label for="k0r1-comprobante">Foto del comprobante</label>
+  <input id="k0r1-comprobante" type="file" accept="image/*"
+    style="display:block;width:100%;margin:10px 0 16px">
+
+  <button id="k0r1-enviar" type="button"
+    style="width:100%;padding:13px;background:#8055e8;color:white;border:0;border-radius:9px;font-weight:bold;cursor:pointer">
+    Preparar solicitud
+  </button>
+
+  <p id="k0r1-estado" role="status" style="line-height:1.5"></p>
+</section>
+
+<script>
+(() => {
+  const boton = document.getElementById("k0r1-enviar");
+  if (!boton) return;
+
+  boton.addEventListener("click", () => {
+    const producto = document.getElementById("k0r1-producto").value;
+    const correo = document.getElementById("k0r1-correo").value.trim();
+    const archivo = document.getElementById("k0r1-comprobante").files[0];
+    const estado = document.getElementById("k0r1-estado");
+
+    if (!correo || !correo.includes("@")) {
+      estado.textContent = "Escribe un correo válido.";
+      return;
+    }
+
+    if (!archivo || !archivo.type.startsWith("image/")) {
+      estado.textContent = "Selecciona la foto del comprobante.";
+      return;
+    }
+
+    estado.textContent =
+      "Solicitud preparada para: " + producto +
+      ". Aún falta enviar la imagen a un servidor seguro y verificar el pago. " +
+      "No se ha emitido ninguna licencia.";
+  });
+})();
+</script>
+<!-- FIN CHAT DE PEDIDOS K0R1 -->
 
