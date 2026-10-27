@@ -563,6 +563,282 @@ s.</p></div></div></section></p></div></div></section>
     });
   });
 })();
+</script></body>
+</html>
+<!-- K0R1 AURA | INTERFAZ FUTURISTA -->
+<style>
+#k0r1-aura {
+  --bg:#050817; --panel:#080e20; --purple:#a855f7;
+  --blue:#00c8ff; --cyan:#22d3ee; --text:#f5f3ff;
+  background:radial-gradient(ellipse at 50% 0%,#211044 0%,var(--bg) 65%);
+  color:var(--text); padding:24px; border:1px solid #30205d;
+  border-radius:18px; font-family:Segoe UI,Arial,sans-serif;
+  max-width:1400px; margin:25px auto; overflow:hidden;
+}
+#k0r1-aura * {box-sizing:border-box}
+#k0r1-aura button,#k0r1-aura input,#k0r1-aura select {font:inherit}
+#k0r1-aura button {cursor:pointer}
+#k0r1-aura .ka-nav {
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+  gap:14px; padding:12px 0 22px; border-bottom:1px solid #35216b;
+}
+#k0r1-aura .ka-logo {
+  font-size:34px; font-weight:900; letter-spacing:2px;
+  color:#c084fc; text-shadow:0 0 18px #9333ea;
+}
+#k0r1-aura .ka-links {display:flex; flex-wrap:wrap; gap:8px}
+#k0r1-aura .ka-links button {
+  color:#dbeafe; background:transparent; border:0;
+  padding:10px 12px; border-radius:8px;
+}
+#k0r1-aura .ka-links button:hover {background:#7c3aed33}
+#k0r1-aura .ka-hero {
+  display:grid; grid-template-columns:1.3fr .8fr; gap:25px;
+  align-items:center; padding:38px 12px;
+}
+#k0r1-aura .ka-kicker {color:var(--cyan);letter-spacing:4px;font-size:12px}
+#k0r1-aura .ka-hero h1 {
+  font-size:clamp(38px,6vw,72px); margin:12px 0;
+  line-height:1.05; background:linear-gradient(90deg,#fff,#c084fc,#00c8ff);
+  color:transparent; background-clip:text;
+}
+#k0r1-aura .ka-hero h2 {font-size:21px;margin:12px 0}
+#k0r1-aura .ka-muted {color:#b9c6e5;line-height:1.7}
+#k0r1-aura .ka-actions {display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+#k0r1-aura .ka-btn {
+  border:1px solid #5941a7;border-radius:12px;padding:12px 18px;
+  background:#10152d;color:white;
+}
+#k0r1-aura .ka-main {
+  background:linear-gradient(90deg,#9333ea,#4f46e5);
+  border:0;box-shadow:0 0 22px #7c3aed66;font-weight:700;
+}
+#k0r1-aura .ka-orb {
+  width:min(260px,70vw);aspect-ratio:1;border-radius:50%;margin:auto;
+  display:grid;place-items:center;text-align:center;
+  border:2px solid #4938ff;
+  background:radial-gradient(circle,#152c68,#090b20 68%);
+  box-shadow:0 0 22px #6d28d9, inset 0 0 35px #075985;
+}
+#k0r1-aura .ka-orb strong {font-size:42px;color:#c4b5fd;text-shadow:0 0 20px #8b5cf6}
+#k0r1-aura .ka-orb span {display:block;color:#22d3ee;letter-spacing:4px}
+#k0r1-aura .ka-section {
+  border:1px solid #4931a1;border-radius:16px;padding:20px;margin:10px 0 18px;
+  background:#080d1cbb;
+}
+#k0r1-aura .ka-section-title {
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;flex-wrap:wrap;margin-bottom:18px;
+}
+#k0r1-aura .ka-section-title h2 {font-size:20px;color:#c084fc;margin:0}
+#k0r1-aura .ka-grid {
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;
+}
+#k0r1-aura .ka-card {
+  padding:18px;border:1px solid #a855f7;border-radius:14px;
+  background:linear-gradient(145deg,#1a1037,#070d1d);
+  display:flex;flex-direction:column;min-width:0;
+}
+#k0r1-aura .ka-card:nth-child(2){border-color:#00c8ff}
+#k0r1-aura .ka-card:nth-child(3){border-color:#fbbf24;background:linear-gradient(145deg,#211b0a,#080d1d)}
+#k0r1-aura .ka-card:nth-child(4){border-color:#00e5d4}
+#k0r1-aura .ka-icon {font-size:30px}
+#k0r1-aura .ka-card h3 {margin:12px 0 6px}
+#k0r1-aura .ka-card p {font-size:13px;color:#c1cbe4;line-height:1.6}
+#k0r1-aura .ka-features {font-size:13px;line-height:2;color:#dbeafe;padding-left:18px}
+#k0r1-aura .ka-card .ka-btn {margin-top:auto}
+#k0r1-aura .ka-order {
+  display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center;
+  border-color:#6d28d9;
+}
+#k0r1-aura .ka-art {
+  min-height:210px;display:grid;place-items:center;text-align:center;
+  border-radius:12px;background:radial-gradient(circle,#28104b,#080d1d 70%);
+  color:#c084fc;font-size:54px;
+}
+#k0r1-aura .ka-form {
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
+}
+#k0r1-aura .ka-field label {display:block;font-size:12px;margin-bottom:7px;color:#dbeafe}
+#k0r1-aura .ka-field input,#k0r1-aura .ka-field select {
+  width:100%;min-width:0;padding:12px;border:1px solid #344b8b;
+  border-radius:8px;background:#080f26;color:white;
+}
+#k0r1-aura .ka-wide {grid-column:1/-1}
+#k0r1-aura .ka-notice {
+  display:none;margin-top:12px;padding:14px;border:1px solid #087ca4;
+  border-radius:10px;background:#06192b;color:#a5f3fc;line-height:1.6;
+  overflow-wrap:anywhere;
+}
+#k0r1-aura .ka-footer {text-align:center;color:#8994b4;font-size:12px;padding:22px 0 4px}
+@media(max-width:850px) {
+  #k0r1-aura .ka-hero {grid-template-columns:1fr}
+  #k0r1-aura .ka-orb {width:190px}
+  #k0r1-aura .ka-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  #k0r1-aura .ka-order {grid-template-columns:1fr}
+  #k0r1-aura .ka-art {min-height:100px}
+}
+@media(max-width:520px) {
+  #k0r1-aura {padding:14px}
+  #k0r1-aura .ka-grid,#k0r1-aura .ka-form {grid-template-columns:1fr}
+  #k0r1-aura .ka-wide {grid-column:auto}
+  #k0r1-aura .ka-links {width:100%}
+}
+</style>
+
+<section id="k0r1-aura">
+  <nav class="ka-nav">
+    <div class="ka-logo">♛ K0R1</div>
+    <div class="ka-links">
+      <button data-target="ka-home">⌂ Inicio</button>
+      <button data-target="ka-store">🛒 Tienda</button>
+      <button data-target="ka-features">⚙ Funciones</button>
+      <button data-target="ka-order">◉ Pedidos</button>
+    </div>
+  </nav>
+
+  <header class="ka-hero" id="ka-home">
+    <div>
+      <div class="ka-kicker">♛ BIENVENIDO A</div>
+      <h1>K0R1 AURA</h1>
+      <h2>Tu asistente inteligente, todo en uno.</h2>
+      <p class="ka-muted">
+        Explora las herramientas de K0R1 y encuentra la versión
+        que mejor se adapte a tus necesidades.
+      </p>
+      <div class="ka-actions">
+        <button class="ka-btn ka-main" data-target="ka-store">🚀 Comenzar ahora →</button>
+        <button class="ka-btn" data-message="Añade aquí el enlace de tu tutorial.">▶ Ver tutorial</button>
+      </div>
+    </div>
+    <div class="ka-orb"><div><strong>♛ K0R1</strong><span>A U R A</span></div></div>
+  </header>
+
+  <section class="ka-section" id="ka-store">
+    <div class="ka-section-title">
+      <h2>🚀 NUESTRAS VERSIONES</h2>
+      <span class="ka-muted">Elige tu edición</span>
+    </div>
+    <div class="ka-grid">
+      <article class="ka-card">
+        <div class="ka-icon">🤖</div><h3>AURA JARVIS</h3>
+        <p>Tu asistente personal con IA.</p>
+        <ul class="ka-features"><li>Comandos de voz</li><li>Herramientas inteligentes</li><li>Soporte</li></ul>
+        <button class="ka-btn" data-product="AURA JARVIS">Conoce más →</button>
+      </article>
+      <article class="ka-card">
+        <div class="ka-icon">⚡</div><h3>K0R1 PRO</h3>
+        <p>Más potencia y control.</p>
+        <ul class="ka-features"><li>Funciones de AURA</li><li>Herramientas avanzadas</li><li>Opciones adicionales</li></ul>
+        <button class="ka-btn" data-product="K0R1 PRO">Conoce más →</button>
+      </article>
+      <article class="ka-card">
+        <div class="ka-icon">👑</div><h3>K0R1 ULTIMATE</h3>
+        <p>La experiencia completa.</p>
+        <ul class="ka-features"><li>Funciones PRO</li><li>Opciones avanzadas</li><li>Soporte prioritario</li></ul>
+        <button class="ka-btn" data-product="K0R1 ULTIMATE">Conoce más →</button>
+      </article>
+      <article class="ka-card">
+        <div class="ka-icon">🎁</div><h3>Versión gratuita</h3>
+        <p>Empieza con las funciones básicas.</p>
+        <ul class="ka-features"><li>Funciones gratuitas</li><li>Herramientas básicas</li><li>Acceso inicial</li></ul>
+        <button class="ka-btn" data-product="Versión gratuita">Explorar gratis →</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="ka-section" id="ka-features">
+    <div class="ka-section-title"><h2>⚙ CENTRO DE CONTROL</h2></div>
+    <p class="ka-muted">Panel web de K0R1 AURA. Las funciones del sistema deben conectarse por separado.</p>
+    <div class="ka-actions">
+      <button class="ka-btn" data-message="Esta sección necesita conectarse a la función real de tu app.">🤖 Asistente</button>
+      <button class="ka-btn" data-message="Esta sección necesita integrarse con herramientas reales de Windows.">⚡ Herramientas</button>
+      <button class="ka-btn" data-message="No se ejecutan optimizaciones del PC desde esta página web.">🎮 Modo competitivo</button>
+    </div>
+  </section>
+
+  <section class="ka-section ka-order" id="ka-order">
+    <div class="ka-art">◈<br/><span style="font-size:18px">K0R1 AURA</span></div>
+    <div>
+      <div class="ka-section-title"><h2>◉ CENTRO DE PEDIDOS</h2></div>
+      <p class="ka-muted">Selecciona el producto y prepara tu solicitud.</p>
+      <form id="ka-order-form" class="ka-form">
+        <div class="ka-field">
+          <label for="ka-product">Producto solicitado</label>
+          <select id="ka-product" required>
+            <option>AURA JARVIS</option><option>K0R1 PRO</option>
+            <option>K0R1 ULTIMATE</option><option>Versión gratuita</option>
+          </select>
+        </div>
+        <div class="ka-field">
+          <label for="ka-email">Tu correo</label>
+          <input id="ka-email" type="email" placeholder="tu@correo.com" required/>
+        </div>
+        <div class="ka-field">
+          <label for="ka-receipt">Comprobante (si corresponde)</label>
+          <input id="ka-receipt" type="file" accept="image/*"/>
+        </div>
+        <button class="ka-btn ka-main ka-wide" type="submit">➤ Preparar solicitud</button>
+      </form>
+      <div id="ka-notice" class="ka-notice" role="status" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <footer class="ka-footer">K0R1 AURA · INTERFAZ WEB · Seguridad · Rendimiento</footer>
+</section>
+
+<script>
+(() => {
+  const root = document.getElementById("k0r1-aura");
+  if (!root || root.dataset.initialized) return;
+  root.dataset.initialized = "1";
+
+  const notice = root.querySelector("#ka-notice");
+  const showNotice = message => {
+    notice.textContent = message;
+    notice.style.display = "block";
+  };
+
+  root.querySelectorAll("[data-target]").forEach(button => {
+    button.addEventListener("click", () => {
+      const target = root.querySelector("#" + button.dataset.target);
+      if (target) target.scrollIntoView({behavior:"smooth",block:"start"});
+    });
+  });
+
+  root.querySelectorAll("[data-product]").forEach(button => {
+    button.addEventListener("click", () => {
+      root.querySelector("#ka-product").value = button.dataset.product;
+      root.querySelector("#ka-order").scrollIntoView({behavior:"smooth"});
+    });
+  });
+
+  root.querySelectorAll("[data-message]").forEach(button => {
+    button.addEventListener("click", () => showNotice(button.dataset.message));
+  });
+
+  root.querySelector("#ka-order-form").addEventListener("submit", event => {
+    event.preventDefault();
+    const product = root.querySelector("#ka-product").value;
+    const email = root.querySelector("#ka-email").value.trim();
+    const receipt = root.querySelector("#ka-receipt").files[0];
+
+    if (product !== "Versión gratuita" && !receipt) {
+      showNotice("Selecciona el comprobante para preparar la solicitud. Todavía no se ha enviado ni verificado ningún pago.");
+      return;
+    }
+    if (receipt && !receipt.type.startsWith("image/")) {
+      showNotice("Selecciona un archivo de imagen válido.");
+      return;
+    }
+    showNotice(
+      "Solicitud preparada para " + product + ". Correo: " + email +
+      ". Esta página no envía archivos, no confirma pagos y no entrega licencias automáticamente."
+    );
+  });
+})();
 </script>
+<!-- FIN DEL PANEL K0R1 -->
+
 <!-- FIN PANEL K0R1 AURA -->
 
