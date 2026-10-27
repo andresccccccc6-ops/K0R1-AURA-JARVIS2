@@ -368,4 +368,201 @@ s.</p></div></div></section></p></div></div></section>
 })();
 </script>
 <!-- FIN CHAT DE PEDIDOS K0R1 -->
+</body>
+</html>
+<!-- K0R1 AURA - PANEL WEB MEJORADO -->
+<style>
+#k0r1-panel {
+  --purple: #a855f7;
+  --cyan: #22d3ee;
+  color: #f4f4ff;
+  background: radial-gradient(ellipse at top, #251044, #080b16 70%);
+  padding: 28px 18px;
+  border: 1px solid #49316b;
+  border-radius: 20px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  max-width: 1100px;
+  margin: 30px auto;
+  box-shadow: 0 0 35px #7c3aed20;
+}
+#k0r1-panel * { box-sizing: border-box; }
+#k0r1-panel .k-header {
+  text-align: center;
+  padding: 18px 0 28px;
+}
+#k0r1-panel .k-tag {
+  color: var(--cyan);
+  font-size: 12px;
+  letter-spacing: 4px;
+}
+#k0r1-panel h2 {
+  font-size: clamp(30px, 6vw, 48px);
+  margin: 12px 0;
+  background: linear-gradient(90deg, #c084fc, #22d3ee);
+  color: transparent;
+  background-clip: text;
+}
+#k0r1-panel .k-subtitle {
+  color: #b9b7ce;
+  line-height: 1.6;
+}
+#k0r1-panel .k-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border: 1px solid #334155;
+  border-radius: 30px;
+  color: #a5f3fc;
+  font-size: 12px;
+}
+#k0r1-panel .k-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 10px #34d399;
+}
+#k0r1-panel .k-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+#k0r1-panel .k-card {
+  padding: 22px;
+  border: 1px solid #ffffff16;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff0b, #ffffff03);
+  transition: transform .2s, border-color .2s;
+}
+#k0r1-panel .k-card:hover {
+  transform: translateY(-4px);
+  border-color: #a855f7;
+}
+#k0r1-panel .k-icon { font-size: 28px; }
+#k0r1-panel h3 { margin: 12px 0 8px; }
+#k0r1-panel .k-desc {
+  color: #b7b5cb;
+  line-height: 1.6;
+  font-size: 14px;
+  min-height: 44px;
+}
+#k0r1-panel .k-button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid #8b5cf6;
+  border-radius: 10px;
+  color: white;
+  background: #7c3aed22;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background .2s;
+}
+#k0r1-panel .k-button:hover {
+  background: #7c3aed66;
+}
+#k0r1-panel .k-primary {
+  background: linear-gradient(90deg, #7c3aed, #2563eb);
+  border: none;
+}
+#k0r1-panel .k-notice {
+  display: none;
+  padding: 14px;
+  margin-top: 18px;
+  border-radius: 10px;
+  border: 1px solid #475569;
+  background: #0f172a;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#k0r1-panel .k-footer {
+  text-align: center;
+  color: #85839c;
+  font-size: 12px;
+  margin-top: 26px;
+}
+</style>
+
+<section id="k0r1-panel">
+  <header class="k-header">
+    <div class="k-tag">NEXT-GEN CONTROL INTERFACE</div>
+    <h2>K0R1 AURA</h2>
+    <p class="k-subtitle">
+      Tu centro de control. Accede a tus herramientas,
+      explora las versiones y consulta el estado del sistema.
+    </p>
+    <div class="k-status">
+      <span class="k-dot"></span>
+      INTERFAZ WEB ACTIVA
+    </div>
+  </header>
+
+  <div class="k-grid">
+    <article class="k-card">
+      <div class="k-icon">🤖</div>
+      <h3>AURA JARVIS</h3>
+      <p class="k-desc">Explora las funciones del asistente y sus herramientas.</p>
+      <button class="k-button" data-message="AURA JARVIS">
+        Explorar AURA
+      </button>
+    </article>
+
+    <article class="k-card">
+      <div class="k-icon">⚡</div>
+      <h3>K0R1 PRO</h3>
+      <p class="k-desc">Consulta las funciones disponibles de la versión PRO.</p>
+      <button class="k-button" data-message="K0R1 PRO">
+        Ver PRO
+      </button>
+    </article>
+
+    <article class="k-card">
+      <div class="k-icon">👑</div>
+      <h3>K0R1 ULTIMATE</h3>
+      <p class="k-desc">Descubre la edición completa y sus características.</p>
+      <button class="k-button" data-message="K0R1 ULTIMATE">
+        Ver ULTIMATE
+      </button>
+    </article>
+
+    <article class="k-card">
+      <div class="k-icon">🆓</div>
+      <h3>Versión gratuita</h3>
+      <p class="k-desc">Consulta las funciones gratuitas disponibles para empezar.</p>
+      <button class="k-button" data-message="Versión gratuita">
+        Explorar gratis
+      </button>
+    </article>
+  </div>
+
+  <div id="k0r1-notice" class="k-notice" role="status" aria-live="polite"></div>
+
+  <footer class="k-footer">
+    K0R1 AURA · PANEL WEB · La disponibilidad de funciones depende de tu versión.
+  </footer>
+</section>
+
+<script>
+(() => {
+  const panel = document.getElementById("k0r1-panel");
+  if (!panel || panel.dataset.ready) return;
+  panel.dataset.ready = "true";
+
+  const notice = panel.querySelector("#k0r1-notice");
+
+  panel.querySelectorAll("[data-message]").forEach(button => {
+    button.addEventListener("click", () => {
+      const product = button.dataset.message;
+      notice.style.display = "block";
+      notice.textContent =
+        product + ": has seleccionado esta sección. " +
+        "Este panel es visual; conecta aquí la función real de tu app para activarla.";
+      notice.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  });
+})();
+</script>
+<!-- FIN PANEL K0R1 AURA -->
 
