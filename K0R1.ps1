@@ -1,4 +1,4 @@
-﻿# K0R1 - inicio compatible con Windows PowerShell 5.1
+# K0R1 - inicio compatible con Windows PowerShell 5.1
 # Ejecuta este archivo con powershell.exe -NoProfile -ExecutionPolicy Bypass -File "ruta\K0R1.ps1"
 Add-Type -AssemblyName PresentationFramework -ErrorAction Stop
 Add-Type -AssemblyName PresentationCore -ErrorAction Stop
@@ -8,10 +8,15 @@ Add-Type -AssemblyName System.Speech -ErrorAction Stop
 $ErrorActionPreference = 'SilentlyContinue'
 
 # --- 1. ESTRUCTURA XAML PRINCIPAL (UNIFICADA) ---
+# Diseño basado en el sitio público K0R1 AURA JARVIS: hero morado, módulos y tarjetas de funciones.
+# Seguridad: los PIN siguen siendo de demostración local. Google usa OAuth + PKCE si configuras el Client ID de tipo Desktop app.
+# Para activar Google, crea google-client-id.txt junto a este archivo con SOLO el OAuth Client ID público.
+# Seguridad: cliente local, no sustituye autenticación/roles de servidor; no guarda tokens deliberadamente.
+# El modo Google de esta build habilita solo navegación FREE; las funciones premium no son un sistema de pago real.
 [xml]$xamlMain = @'
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="K0R1 AURA // JARVIS COMMAND CENTER" Height="900" Width="1480" MinHeight="760" MinWidth="1120" WindowStartupLocation="CenterScreen"
+        Title="K0R1 OPTIMIZER // COMMAND CENTER" Height="940" Width="1540" MinHeight="780" MinWidth="1180" WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize" Background="#08080D" Foreground="White" FontFamily="Segoe UI">
     <Window.Resources>
         <Style TargetType="Button">
@@ -35,6 +40,8 @@ $ErrorActionPreference = 'SilentlyContinue'
                     <TextBox x:Name="TxtEmail" Height="40" Background="#14141B" Foreground="White" BorderBrush="#27273A" BorderThickness="1.5" VerticalContentAlignment="Center" FontSize="13" Padding="10,0"/>
                     
                     <Button x:Name="BtnRegister" Content="CONTINUAR AL ACCESO  →" Height="42" Margin="0,20,0,0" Background="#581C87" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand"/>
+                    <Button x:Name="BtnGoogleRegister" Content="G  CONTINUAR CON GOOGLE" Height="42" Margin="0,10,0,0" Background="#15151F" Foreground="#E9D5FF" BorderBrush="#6D28D9" BorderThickness="1" FontWeight="Bold"/>
+                    <TextBlock Text="Cada usuario debe usar su propio correo y código." FontSize="11" Foreground="#A1A1AA" HorizontalAlignment="Center" Margin="0,12,0,0"/>
                     <TextBlock Text="K0R1  •  WINDOWS COMMAND CENTER" FontSize="11" Foreground="#6B7280" HorizontalAlignment="Center" Margin="0,18,0,0"/>
                 </StackPanel>
             </Border>
@@ -45,11 +52,14 @@ $ErrorActionPreference = 'SilentlyContinue'
             <Border Width="420" Padding="35" Background="#0D0D12" CornerRadius="18" BorderBrush="#27273A" BorderThickness="1.5" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel>
                     <TextBlock Text="🔒 ACCESO RESTRINGIDO" FontSize="18" FontWeight="Black" Foreground="#A855F7" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                    <TextBlock Text="Introduce el PIN local de demostración:" FontSize="12" Foreground="#A1A1AA" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                    <TextBlock Text="Introduce tu código de acceso (modo local de demostración):" FontSize="12" Foreground="#A1A1AA" HorizontalAlignment="Center" Margin="0,0,0,20"/>
                     
                     <PasswordBox x:Name="TxtPin" Height="40" Background="#14141B" Foreground="White" BorderBrush="#27273A" BorderThickness="1.5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
                     
-                    <Button x:Name="BtnLogin" Content="ENTRAR AL SISTEMA 🔑" Height="42" Margin="0,20,0,0" Background="#581C87" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand"/>
+                    <Button x:Name="BtnLogin" Content="ENTRAR CON CÓDIGO 🔑" Height="42" Margin="0,20,0,0" Background="#581C87" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand"/>
+                    <Button x:Name="BtnGoogleLogin" Content="G  INICIAR CON GOOGLE" Height="42" Margin="0,10,0,0" Background="#15151F" Foreground="#E9D5FF" BorderBrush="#6D28D9" BorderThickness="1" FontWeight="Bold"/>
+                    <Button x:Name="BtnBackRegister" Content="← VOLVER" Height="32" Margin="0,8,0,0" Background="Transparent" Foreground="#A1A1AA" BorderThickness="0"/>
+                    <TextBlock Text="Google requiere configurar un cliente OAuth para verificar la cuenta." FontSize="10" Foreground="#FBBF24" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,12,0,0"/>
                 </StackPanel>
             </Border>
         </Grid>
@@ -88,7 +98,7 @@ $ErrorActionPreference = 'SilentlyContinue'
                     <Button x:Name="NavTweaks" Content=" ⚡ Tweaks PRO &amp; Diseño" Height="36" Background="Transparent" Foreground="#9CA3AF" BorderThickness="0" HorizontalContentAlignment="Left" Margin="0,3" Padding="12,0" Cursor="Hand"/>
                     <Button x:Name="NavRed" Content=" 🌐 Zero Lag (Red)" Height="36" Background="Transparent" Foreground="#C084FC" FontWeight="Bold" BorderThickness="0" HorizontalContentAlignment="Left" Margin="0,3" Padding="12,0" Cursor="Hand"/>
                     <Button x:Name="NavFortnite" Content=" 🎮 Fortnite &amp; GPU" Height="36" Background="Transparent" Foreground="#9CA3AF" BorderThickness="0" HorizontalContentAlignment="Left" Margin="0,3" Padding="12,0" Cursor="Hand"/>
-                    <Button x:Name="NavHardwareFPS" Content=" 🖥️ Mis componentes / FPS" Height="36" Background="Transparent" Foreground="#C084FC" BorderThickness="0" HorizontalContentAlignment="Left" Margin="0,3" Padding="12,0" Cursor="Hand"/>
+                    <Button x:Name="NavHardwareFPS" Content=" 🖥️ Mis componentes / FPS" Height="36" Background="Transparent" Foreground="#C084FC" FontWeight="Bold" BorderThickness="0" HorizontalContentAlignment="Left" Margin="0,3" Padding="12,0" Cursor="Hand"/>
                     <Button x:Name="NavMega" Content="🚀 Mega Optimización" Height="36" Background="Transparent" Foreground="#9CA3AF" BorderThickness="0" HorizontalContentAlignment="Left" Margin="0,3" Padding="12,0" Cursor="Hand"/>
                     <Button x:Name="NavLimpieza" Content=" 🧹 Limpieza SSD" Height="36" Background="Transparent" Foreground="#9CA3AF" BorderThickness="0" HorizontalContentAlignment="Left" Margin="0,3" Padding="12,0" Cursor="Hand"/>
                     
@@ -105,10 +115,48 @@ $ErrorActionPreference = 'SilentlyContinue'
             <!-- VISTAS INTERNAS DEL PANEL -->
             <Grid Grid.Column="1" Margin="30">
                 
-                <!-- VISTA INICIO -->
-                <StackPanel x:Name="ViewInicio" Visibility="Visible">
-                    <TextBlock Text="CENTRO DE MANDO" FontSize="28" FontWeight="Black" Foreground="White"/>
-                    <TextBlock Text="RENDIMIENTO DEL SISTEMA  •  ESTADO DEL EQUIPO  •  HERRAMIENTAS" FontSize="13" Foreground="#9CA3AF" Margin="0,4,0,20"/>
+                <!-- VISTA INICIO: DISEÑO INSPIRADO EN LA WEB K0R1 AURA JARVIS -->
+                <ScrollViewer x:Name="ViewInicio" Visibility="Visible" VerticalScrollBarVisibility="Auto">
+                  <StackPanel>
+                    <Border CornerRadius="18" Padding="24" Margin="0,0,0,20" BorderBrush="#49306D" BorderThickness="1"
+                            Background="#100B1C">
+                      <Border.Effect><DropShadowEffect Color="#7C3AED" BlurRadius="24" ShadowDepth="0" Opacity="0.22"/></Border.Effect>
+                      <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                          <TextBlock Text="NEXT-GEN CONTROL INTERFACE" FontSize="11" FontWeight="Bold" Foreground="#A78BFA" Margin="0,0,0,8"/>
+                          <TextBlock Text="K0R1 AURA JARVIS" FontSize="31" FontWeight="Black" Foreground="#F5F3FF"/>
+                          <TextBlock Text="Controla tu sistema. Entra en modo AURA." FontSize="19" FontWeight="SemiBold" Foreground="#C4B5FD" Margin="0,2,0,8"/>
+                          <TextBlock Text="Herramientas de diagnóstico, utilidades de Windows y preparación gaming en un solo panel." FontSize="13" Foreground="#A1A1AA" TextWrapping="Wrap" MaxWidth="720"/>
+                          <WrapPanel Margin="0,16,0,0">
+                            <Button x:Name="BtnWebFeatures" Content="EXPLORAR FUNCIONES ↗" Background="#6D28D9" Padding="14,9" Margin="0,0,10,0"/>
+                            <Button x:Name="BtnOpenWebsite" Content="ABRIR SITIO K0R1 ↗" Background="#21162F" Foreground="#E9D5FF" Padding="14,9"/>
+                          </WrapPanel>
+                        </StackPanel>
+                        <Border Grid.Column="1" Width="112" Height="112" CornerRadius="20" Background="#211238" BorderBrush="#7C3AED" BorderThickness="1" Margin="20,0,0,0" VerticalAlignment="Center">
+                          <TextBlock Text="K0R1" FontSize="30" FontWeight="Black" Foreground="#C084FC" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                      </Grid>
+                    </Border>
+
+                    <TextBlock Text="MÓDULOS DEL SISTEMA" FontSize="11" FontWeight="Bold" Foreground="#A78BFA" Margin="0,0,0,5"/>
+                    <TextBlock Text="Herramientas con propósito" FontSize="25" FontWeight="Black" Foreground="White"/>
+                    <TextBlock Text="Diagnóstico claro, acciones revisables y accesos directos. Sin promesas falsas de FPS." FontSize="13" Foreground="#9CA3AF" Margin="0,4,0,16"/>
+                    <WrapPanel Margin="0,0,0,8">
+                      <Border Width="210" MinHeight="112" Background="#0D0D14" CornerRadius="12" BorderBrush="#34234B" BorderThickness="1" Margin="0,0,12,12" Padding="14">
+                        <StackPanel><TextBlock Text="◈  ALMACENAMIENTO" FontWeight="Bold" Foreground="#C4B5FD"/><TextBlock Text="Espacio libre, unidades y limpieza revisable." Foreground="#A1A1AA" TextWrapping="Wrap" Margin="0,8,0,0"/></StackPanel>
+                      </Border>
+                      <Border Width="210" MinHeight="112" Background="#0D0D14" CornerRadius="12" BorderBrush="#34234B" BorderThickness="1" Margin="0,0,12,12" Padding="14">
+                        <StackPanel><TextBlock Text="⌁  PROCESOS Y ARRANQUE" FontWeight="Bold" Foreground="#C4B5FD"/><TextBlock Text="Revisa procesos y programas de inicio antes de cambiar nada." Foreground="#A1A1AA" TextWrapping="Wrap" Margin="0,8,0,0"/></StackPanel>
+                      </Border>
+                      <Border Width="210" MinHeight="112" Background="#0D0D14" CornerRadius="12" BorderBrush="#34234B" BorderThickness="1" Margin="0,0,12,12" Padding="14">
+                        <StackPanel><TextBlock Text="⌘  DIAGNÓSTICO DNS" FontWeight="Bold" Foreground="#C4B5FD"/><TextBlock Text="Comprueba conectividad y resolución de nombres." Foreground="#A1A1AA" TextWrapping="Wrap" Margin="0,8,0,0"/></StackPanel>
+                      </Border>
+                      <Border Width="210" MinHeight="112" Background="#0D0D14" CornerRadius="12" BorderBrush="#34234B" BorderThickness="1" Margin="0,0,12,12" Padding="14">
+                        <StackPanel><TextBlock Text="✧  ENFOQUE GAMING" FontWeight="Bold" Foreground="#C4B5FD"/><TextBlock Text="Revisa el equipo y prepara Windows antes de jugar." Foreground="#A1A1AA" TextWrapping="Wrap" Margin="0,8,0,0"/></StackPanel>
+                      </Border>
+                    </WrapPanel>
+                    <TextBlock Text="RENDIMIENTO DEL SISTEMA  •  ESTADO DEL EQUIPO  •  HERRAMIENTAS" FontSize="13" Foreground="#9CA3AF" Margin="0,4,0,16"/>
 
                     <WrapPanel>
                         <Border Width="230" Height="120" Background="#0D0D14" CornerRadius="14" BorderBrush="#1E1E2C" BorderThickness="1" Margin="0,0,20,20" Padding="16">
@@ -123,6 +171,7 @@ $ErrorActionPreference = 'SilentlyContinue'
                                 <TextBlock Text="GPU  /  USO GRÁFICO" FontSize="11" FontWeight="Bold" Foreground="#6B7280"/>
                                 <TextBlock x:Name="LblGpuVal" Text="N/D" FontSize="30" FontWeight="Black" Foreground="#A855F7" Margin="0,2,0,0" ToolTip="No se inventa el porcentaje si Windows no expone un contador compatible."/>
                                 <ProgressBar x:Name="BarGpu" Height="10" Value="0" Maximum="100" Background="#1E1E2C" Foreground="#A855F7" BorderThickness="0" Margin="0,6,0,0"/>
+                                <TextBlock x:Name="LblTempVal" Text="Temperatura: N/D" FontSize="12" Foreground="#A1A1AA" Margin="0,8,0,0" ToolTip="Windows no expone temperaturas fiables en todos los equipos; N/D significa que no hay sensor compatible."/>
                             </StackPanel>
                         </Border>
                         <Border Width="230" Height="120" Background="#0D0D14" CornerRadius="14" BorderBrush="#1E1E2C" BorderThickness="1" Margin="0,0,20,20" Padding="16">
@@ -143,8 +192,8 @@ $ErrorActionPreference = 'SilentlyContinue'
                             <Button x:Name="BtnRestoreBackup" Content="RESTAURAR BACKUP DEL REGISTRO" Height="38" Margin="0,8,0,0" Background="#27272A" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand"/>
                         </StackPanel>
                     </Border>
-                </StackPanel>
-
+                  </StackPanel>
+                </ScrollViewer>
                 <!-- VISTA TWEAKS -->
                 <ScrollViewer x:Name="ViewTweaks" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
@@ -177,6 +226,38 @@ $ErrorActionPreference = 'SilentlyContinue'
                                 </StackPanel>
                                 <ToggleButton x:Name="TglTweak2" Grid.Column="1" IsEnabled="False" ToolTip="Desactivado hasta implementar una opción reversible y comprobada."/>
                             </Grid>
+                        </Border>
+                        <Border Background="#11101A" CornerRadius="14" BorderBrush="#3B1D56" BorderThickness="1" Padding="18" Margin="0,0,0,12" MaxWidth="850" HorizontalAlignment="Left">
+                            <StackPanel>
+                                <TextBlock Text="📊 CÓMO LEER LAS MÉTRICAS" FontSize="16" FontWeight="Bold" Foreground="#D8B4FE"/>
+                                <TextBlock Text="CPU % = carga reportada por Windows; RAM % = memoria usada respecto a la utilizable; GPU % depende de los contadores que exponga el driver; disco y red pueden variar por muestreo. Son lecturas del sistema, no una promesa de FPS. Para medir FPS/1% lows usa el contador de Fortnite o una herramienta de confianza y compara la misma escena." FontSize="12" Foreground="#A1A1AA" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#11101A" CornerRadius="14" BorderBrush="#3B1D56" BorderThickness="1" Padding="18" Margin="0,0,0,12" MaxWidth="850" HorizontalAlignment="Left">
+                            <StackPanel>
+                                <TextBlock Text="🎮 AJUSTES COMPETITIVOS DE FORTNITE" FontSize="16" FontWeight="Bold" Foreground="#D8B4FE"/>
+                                <TextBlock Text="Empieza por modo Rendimiento si resulta estable, pantalla completa, V-Sync desactivado si priorizas latencia, límite de FPS que el equipo mantenga y resolución 3D que conserve claridad. Cambia una opción a la vez y mide FPS medios, 1% lows y latencia; no hay porcentaje universal de mejora." FontSize="12" Foreground="#A1A1AA" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#11101A" CornerRadius="14" BorderBrush="#3B1D56" BorderThickness="1" Padding="18" Margin="0,0,0,12" MaxWidth="850" HorizontalAlignment="Left">
+                            <StackPanel>
+                                <TextBlock Text="🧩 INICIO DE WINDOWS" FontSize="16" FontWeight="Bold" Foreground="#D8B4FE"/>
+                                <TextBlock Text="Revisa Aplicaciones de inicio en Configuración o Administrador de tareas y desactiva solo programas que reconozcas y no necesites al arrancar. No deshabilites servicios de AMD, audio, red, seguridad ni controladores a ciegas." FontSize="12" Foreground="#A1A1AA" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                <Button x:Name="BtnOpenStartupSettings" Content="ABRIR APLICACIONES DE INICIO" HorizontalAlignment="Left" Padding="14,9" Margin="0,10,0,0" Background="#202030" Foreground="White"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#11101A" CornerRadius="14" BorderBrush="#3B1D56" BorderThickness="1" Padding="18" Margin="0,0,0,12" MaxWidth="850" HorizontalAlignment="Left">
+                            <StackPanel>
+                                <TextBlock Text="🛡️ SEGURIDAD DEL SISTEMA" FontSize="16" FontWeight="Bold" Foreground="#D8B4FE"/>
+                                <TextBlock Text="K0R1 no desactiva Microsoft Defender, Firewall ni UAC. Mantén Windows y drivers actualizados, descarga solo desde fuentes oficiales y no ejecutes el optimizador como administrador salvo que una función concreta lo requiera y entiendas el cambio." FontSize="12" Foreground="#A1A1AA" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                <Button x:Name="BtnOpenWindowsSecurity" Content="ABRIR SEGURIDAD DE WINDOWS" HorizontalAlignment="Left" Padding="14,9" Margin="0,10,0,0" Background="#202030" Foreground="White"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#11101A" CornerRadius="14" BorderBrush="#3B1D56" BorderThickness="1" Padding="18" Margin="0,0,0,12" MaxWidth="850" HorizontalAlignment="Left">
+                            <StackPanel>
+                                <TextBlock Text="💡 RGB DE VENTILADORES" FontSize="16" FontWeight="Bold" Foreground="#D8B4FE"/>
+                                <TextBlock Text="El cambio físico depende del controlador, conexión y compatibilidad. Esta versión puede abrir OpenRGB si está instalado; no garantiza compatibilidad con cada placa, hub o ventilador. Si no lo detecta, usa la utilidad oficial del fabricante." FontSize="12" Foreground="#A1A1AA" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                            </StackPanel>
                         </Border>
                         <Border Background="#11101A" CornerRadius="14" BorderBrush="#3B1D56" BorderThickness="1" Padding="18" Margin="0,0,0,12" MaxWidth="850" HorizontalAlignment="Left">
                             <StackPanel>
@@ -269,7 +350,7 @@ $ErrorActionPreference = 'SilentlyContinue'
                         <Border.Effect><DropShadowEffect Color="#7C3AED" BlurRadius="24" ShadowDepth="0" Opacity="0.35"/></Border.Effect>
                         <Grid>
                             <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
-                            <TextBox x:Name="TxtAiChat" Grid.Row="0" Background="#100D1B" Foreground="#F3E8FF" BorderBrush="#4C1D95" FontSize="14" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Padding="14" Text="K0R1 AURA // JARVIS`nESTADO: AURA lista • sin API key • motor local con modo inteligente de respaldo`n`nPrueba: ¿cuántos FPS puedo sacar?, analiza mis componentes, recomienda tweaks o ¿cómo mejoro Fortnite?`n`n"/>
+                            <TextBox x:Name="TxtAiChat" Grid.Row="0" Background="#100D1B" Foreground="#F3E8FF" BorderBrush="#4C1D95" FontSize="14" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Padding="14" Text="K0R1 OPTIMIZER // JARVIS`nESTADO: AURA lista • sin API key • motor local con modo inteligente de respaldo`n`nPrueba: ¿cuántos FPS puedo sacar?, analiza mis componentes, recomienda tweaks o ¿cómo mejoro Fortnite?`n`n"/>
                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,12,0,0">
                                 <TextBox x:Name="TxtAiInput" Width="500" Height="42" Background="#12101D" Foreground="White" BorderBrush="#7C3AED" VerticalContentAlignment="Center" FontSize="14" Padding="12,0" ToolTip="Pregunta sobre FPS, hardware, Fortnite o ajustes seguros"/>
                                 <Button x:Name="BtnAiSend" Content="ANALIZAR ✦" Width="120" Height="42" Margin="12,0,0,0" Background="#6D28D9" Foreground="White" FontWeight="Bold" BorderThickness="0"/>
@@ -320,12 +401,14 @@ $ErrorActionPreference = 'SilentlyContinue'
                 </ScrollViewer>
                 <StackPanel x:Name="ViewRed" Visibility="Collapsed">
                     <TextBlock Text="ZERO LAG  /  RED" FontSize="28" FontWeight="Black" Foreground="White"/>
-                    <TextBlock Text="Diagnóstico de conectividad; no cambia configuraciones de red." Foreground="#A1A1AA" Margin="0,6,0,22"/>
+                    <TextBlock Text="Diagnóstico de conectividad y descubrimiento básico de dispositivos de tu LAN. No escanea redes externas ni cambia configuraciones." Foreground="#A1A1AA" Margin="0,6,0,22"/>
                     <Border Background="#11101A" BorderBrush="#30233F" BorderThickness="1" CornerRadius="14" Padding="22" MaxWidth="760" HorizontalAlignment="Left">
                         <StackPanel>
                             <TextBlock Text="Prueba de conexión" FontSize="18" FontWeight="Bold" Foreground="#C084FC"/>
                             <TextBlock Text="Comprueba la respuesta de un servidor público. El resultado depende de tu proveedor, Wi-Fi y ruta de conexión." TextWrapping="Wrap" Foreground="#A1A1AA" Margin="0,8,0,16"/>
-                            <Button x:Name="BtnNetworkTest" Content="EJECUTAR DIAGNÓSTICO" HorizontalAlignment="Left" Background="#581C87"/>
+                            <Button x:Name="BtnNetworkTest" Content="EJECUTAR DIAGNÓSTICO DE INTERNET" HorizontalAlignment="Left" Background="#581C87" Padding="12,8"/>
+                            <Button x:Name="BtnLanScan" Content="BUSCAR EQUIPOS EN MI RED LOCAL" HorizontalAlignment="Left" Background="#1E1B2E" Foreground="#E9D5FF" Padding="12,8" Margin="0,10,0,0"/>
+                            <TextBlock Text="Busca solo dispositivos de tu red local (LAN). Los equipos que bloquean ping pueden no aparecer." FontSize="11" Foreground="#A1A1AA" TextWrapping="Wrap" Margin="0,8,0,0"/>
                             <TextBlock x:Name="LblNetworkResult" Text="Listo para probar." Foreground="#E9D5FF" TextWrapping="Wrap" Margin="0,16,0,0"/>
                         </StackPanel>
                     </Border>
@@ -560,6 +643,9 @@ $txtEmail   = $windowMain.FindName("TxtEmail")
 $btnReg     = $windowMain.FindName("BtnRegister")
 $txtPin     = $windowMain.FindName("TxtPin")
 $btnLogin   = $windowMain.FindName("BtnLogin")
+$btnGoogleRegister = $windowMain.FindName("BtnGoogleRegister")
+$btnGoogleLogin = $windowMain.FindName("BtnGoogleLogin")
+$btnBackRegister = $windowMain.FindName("BtnBackRegister")
 
 $lblRole    = $windowMain.FindName("LblRoleDisplay")
 $lblEmail   = $windowMain.FindName("LblEmailDisplay")
@@ -575,7 +661,190 @@ $nAi       = $windowMain.FindName("NavAi")
 $nTweaks   = $windowMain.FindName("NavTweaks")
 $nBiosRgb  = $windowMain.FindName("NavBiosRgb")
 
-# --- LÓGICA DE REGISTRO SEGURO ---
+# --- GOOGLE OAUTH REAL (OAuth 2.0 Authorization Code + PKCE) ---
+# Mejora adicional: diagnóstico de errores HTTP compatible con Windows PowerShell 5.1 y PS7.
+# Requiere un OAuth Client ID de tipo "Desktop app" creado por el propietario en Google Cloud.
+# Guarda SOLO el Client ID público en google-client-id.txt junto a este .ps1. Nunca pongas secretos aquí.
+function Start-K0R1GoogleOAuth {
+    $clientFile = Join-Path $PSScriptRoot 'google-client-id.txt'
+    if (-not (Test-Path -LiteralPath $clientFile)) {
+        [System.Windows.MessageBox]::Show(
+            "Para iniciar sesión de verdad, crea un OAuth Client ID de tipo Desktop app en Google Cloud Console y guarda el ID en:`n$clientFile`n`nNo se necesita ni debe guardarse un Client Secret en este script. Después vuelve a pulsar Google.",
+            "Configurar Google OAuth",
+            [System.Windows.MessageBoxButton]::OK,
+            [System.Windows.MessageBoxImage]::Information
+        ) | Out-Null
+        Start-Process 'https://console.cloud.google.com/apis/credentials'
+        return
+    }
+
+    $clientId = (Get-Content -LiteralPath $clientFile -Raw).Trim()
+    if ($clientId -notmatch '^[0-9]+-[a-zA-Z0-9_-]+\.apps\.googleusercontent\.com$') {
+        [System.Windows.MessageBox]::Show("El archivo google-client-id.txt no contiene un Client ID de Google válido.", "OAuth", "OK", "Warning") | Out-Null
+        return
+    }
+
+    $listener = $null
+    try {
+        $port = Get-Random -Minimum 49152 -Maximum 62000
+        $redirectUri = "http://127.0.0.1:$port/"
+        $listener = New-Object System.Net.HttpListener
+        $listener.Prefixes.Add($redirectUri)
+        $listener.Start()
+
+        $randomBytes = New-Object byte[] 32
+        [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($randomBytes)
+        $verifier = [Convert]::ToBase64String($randomBytes).TrimEnd('=').Replace('+','-').Replace('/','_')
+        $sha = [System.Security.Cryptography.SHA256]::Create()
+        $challengeBytes = $sha.ComputeHash([Text.Encoding]::ASCII.GetBytes($verifier))
+        $challenge = [Convert]::ToBase64String($challengeBytes).TrimEnd('=').Replace('+','-').Replace('/','_')
+        $stateBytes = New-Object byte[] 24
+        [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($stateBytes)
+        $state = [Convert]::ToBase64String($stateBytes).TrimEnd('=').Replace('+','-').Replace('/','_')
+
+        $query = "client_id=$([uri]::EscapeDataString($clientId))&redirect_uri=$([uri]::EscapeDataString($redirectUri))&response_type=code&scope=$([uri]::EscapeDataString('openid email profile'))&state=$([uri]::EscapeDataString($state))&code_challenge=$([uri]::EscapeDataString($challenge))&code_challenge_method=S256&access_type=online"
+        Start-Process ("https://accounts.google.com/o/oauth2/v2/auth?$query")
+        $async = $listener.GetContextAsync()
+        if (-not $async.Wait(180000)) { throw "Tiempo de espera agotado al iniciar sesión." }
+        $context = $async.GetAwaiter().GetResult()
+        $req = $context.Request
+        $resp = $context.Response
+        $returnedState = $req.QueryString['state']
+        $code = $req.QueryString['code']
+        $error = $req.QueryString['error']
+        $html = '<html><body style="font-family:Segoe UI;background:#0b0b12;color:white;text-align:center;padding:50px"><h2>K0R1 OPTIMIZER</h2><p>Respuesta recibida. Puedes volver a la aplicación.</p></body></html>'
+        $bytes = [Text.Encoding]::UTF8.GetBytes($html)
+        $resp.ContentType = 'text/html; charset=utf-8'
+        $resp.ContentLength64 = $bytes.Length
+        $resp.OutputStream.Write($bytes,0,$bytes.Length)
+        $resp.Close()
+        if ($error) { throw "Google canceló o rechazó la autorización: $error" }
+        if (-not $code -or $returnedState -ne $state) { throw "La respuesta OAuth no pasó la validación de estado." }
+
+        # Intercambio OAuth por HttpWebRequest para capturar el cuerpo HTTP real
+        # en Windows PowerShell 5.1 y PowerShell 7. No se guarda el código ni los tokens.
+        $formParts = @(
+            ('client_id=' + [uri]::EscapeDataString($clientId)),
+            ('code=' + [uri]::EscapeDataString($code)),
+            ('code_verifier=' + [uri]::EscapeDataString($verifier)),
+            ('redirect_uri=' + [uri]::EscapeDataString($redirectUri)),
+            ('grant_type=authorization_code')
+        )
+        $formBody = $formParts -join '&'
+        $token = $null
+        $request = [System.Net.HttpWebRequest]::Create('https://oauth2.googleapis.com/token')
+        $request.Method = 'POST'
+        $request.ContentType = 'application/x-www-form-urlencoded'
+        $request.Accept = 'application/json'
+        $request.Timeout = 30000
+        $request.ReadWriteTimeout = 30000
+        $request.UserAgent = 'K0R1-AURA-JARVIS/1.0'
+        $request.AllowAutoRedirect = $false
+        $requestBodyBytes = [System.Text.Encoding]::UTF8.GetBytes($formBody)
+        $request.ContentLength = $requestBodyBytes.Length
+
+        try {
+            $requestStream = $request.GetRequestStream()
+            try { $requestStream.Write($requestBodyBytes, 0, $requestBodyBytes.Length) }
+            finally { $requestStream.Dispose() }
+
+            $response = $request.GetResponse()
+            try {
+                $reader = New-Object System.IO.StreamReader($response.GetResponseStream())
+                try { $tokenJson = $reader.ReadToEnd() }
+                finally { $reader.Dispose() }
+                $token = $tokenJson | ConvertFrom-Json -ErrorAction Stop
+            }
+            finally { $response.Close() }
+        }
+        catch [System.Net.WebException] {
+            $httpStatus = 'sin respuesta HTTP'
+            $bodyText = ''
+            $webError = $_.Exception
+            if ($webError.Response) {
+                try { $httpStatus = [string][int]$webError.Response.StatusCode } catch {}
+                try {
+                    $errorStream = $webError.Response.GetResponseStream()
+                    if ($errorStream) {
+                        $errorReader = New-Object System.IO.StreamReader($errorStream)
+                        try { $bodyText = $errorReader.ReadToEnd() }
+                        finally { $errorReader.Dispose() }
+                    }
+                } catch {}
+                try { $webError.Response.Close() } catch {}
+            }
+
+            $googleError = ''
+            $googleDescription = ''
+            if ($bodyText) {
+                try {
+                    $errorObject = $bodyText | ConvertFrom-Json -ErrorAction Stop
+                    $googleError = [string]$errorObject.error
+                    $googleDescription = [string]$errorObject.error_description
+                } catch {}
+            }
+
+            # Diagnóstico accionable: nunca incluye el código OAuth ni credenciales.
+            $advice = switch -Regex ($googleError) {
+                '^invalid_grant$' { 'El código expiró/se reutilizó o el redirect_uri/code_verifier no coincide. Cierra la ventana e intenta una sola vez; confirma que la app usa el mismo redirect_uri recibido.'; break }
+                '^invalid_client$' { 'Google no reconoce el Client ID. Revisa que google-client-id.txt tenga el ID completo de un cliente OAuth de tipo Aplicación de escritorio.'; break }
+                '^unauthorized_client$' { 'El tipo de cliente o el flujo no está permitido. Crea/selecciona un cliente OAuth de Aplicación de escritorio.'; break }
+                '^invalid_request$' { 'Google rechazó parámetros del intercambio. Revisa el tipo de cliente y que no hayas editado manualmente el Client ID.'; break }
+                default { 'Comprueba el código de error y su descripción en Google Cloud Console > Google Auth Platform. No compartas códigos ni tokens.' }
+            }
+            $safeDescription = ($googleDescription -replace '[\r\n]+', ' ').Trim()
+            if ($safeDescription.Length -gt 500) { $safeDescription = $safeDescription.Substring(0, 500) }
+            throw ("OAuth_TOKEN_ERROR|HTTP={0}|ERROR={1}|DESCRIPCION={2}|AYUDA={3}" -f $httpStatus, $googleError, $safeDescription, $advice)
+        }
+        catch {
+            if ($_.Exception.Message -like 'OAuth_TOKEN_ERROR|*') { throw }
+            throw ("OAuth_TOKEN_ERROR|HTTP=respuesta no válida|ERROR=respuesta_parseo|DESCRIPCION={0}|AYUDA=Revisa conexión HTTPS y hora/fecha de Windows." -f ($_.Exception.Message -replace '[\r\n]+',' '))
+        }
+        finally {
+            $formBody = $null
+            $requestBodyBytes = $null
+        }
+        if (-not $token.access_token) { throw "Google no devolvió un token válido." }
+        $profile = Invoke-RestMethod -Method Get -Uri 'https://openidconnect.googleapis.com/v1/userinfo' -Headers @{ Authorization = "Bearer $($token.access_token)" } -TimeoutSec 30
+        if (-not $profile.email -or $profile.email_verified -ne $true) { throw "Google no confirmó un correo verificado." }
+
+        $global:UserEmail = [string]$profile.email
+        $global:GoogleAuthenticated = $true
+        $txtEmail.Text = $global:UserEmail
+        $txtPin.Password = ''
+        $vRegister.Visibility = 'Collapsed'
+        $vLogin.Visibility = 'Collapsed'
+        $vAppMain.Visibility = 'Visible'
+        $lblRole.Text = 'Rango: Google verificado'
+        $lblEmail.Text = "User: $global:UserEmail"
+        # Google login only unlocks FREE mode in this local client. A real paid tier requires server-side authorization.
+        $freeNav = @('NavInicio', 'NavTweaks', 'NavFortnite', 'NavHardwareFPS', 'NavCompra')
+        foreach ($navName in @('NavInicio', 'NavAi', 'NavTweaks', 'NavBiosRgb', 'NavStartup', 'NavRed', 'NavFortnite', 'NavHardwareFPS', 'NavMega', 'NavLimpieza', 'NavIso', 'NavDrivers', 'NavPro', 'NavCompra')) {
+            $navControl = $windowMain.FindName($navName)
+            if ($null -ne $navControl) {
+                $navControl.Visibility = if ($navName -in $freeNav) { [System.Windows.Visibility]::Visible } else { [System.Windows.Visibility]::Collapsed }
+            }
+        }
+        $lblRole.Text = 'Rango: FREE • Google verificado'
+        if ($null -ne $nInicio) { $nInicio.RaiseEvent([System.Windows.RoutedEventArgs]::new([System.Windows.Controls.Button]::ClickEvent)) }
+    }
+    catch {
+        $safeMessage = [string]$_.Exception.Message
+        # No mostrar ni registrar el código de autorización, verifier, access token ni refresh token.
+        $safeMessage = $safeMessage -replace '(?i)(access_token|refresh_token|code_verifier|client_secret)=?[^&\s]*', '$1=[REDACTADO]'
+        [System.Windows.MessageBox]::Show("No se pudo completar el inicio de sesión con Google.`n`nDetalle técnico: $safeMessage`n`nRevisa la causa indicada en ERROR/DESCRIPCION. No compartas códigos de autorización, tokens ni secretos. Google OAuth necesita un Client ID de tipo Aplicación de escritorio en google-client-id.txt.", "Diagnóstico Google OAuth", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
+    }
+    finally {
+        if ($listener) { try { if ($listener.IsListening) { $listener.Stop() }; $listener.Close() } catch {} }
+    }
+}
+$googleClick = { Start-K0R1GoogleOAuth }
+if ($null -ne $btnGoogleRegister) { $btnGoogleRegister.Add_Click($googleClick) }
+if ($null -ne $btnGoogleLogin) { $btnGoogleLogin.Add_Click($googleClick) }
+if ($null -ne $btnBackRegister) {
+    $btnBackRegister.Add_Click({ $vLogin.Visibility = 'Collapsed'; $vRegister.Visibility = 'Visible' })
+}
+
 $btnReg.Add_Click({
     $email = $txtEmail.Text.Trim()
     if (-not [string]::IsNullOrWhiteSpace($email) -and $email -notmatch "^[^\s@]+@[^\s@]+\.[^\s@]+$") {
@@ -586,7 +855,7 @@ $btnReg.Add_Click({
     
     $global:UserEmail = $email
     $txtEmail.BorderBrush = [System.Windows.Media.Brushes]::Gray
-    [System.Windows.MessageBox]::Show("Perfil local listo.`n`nAhora introduce tu código de acceso. Por seguridad, los códigos no se muestran en esta pantalla.`nEste acceso es local de demostración y no crea una cuenta real.", "Éxito", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+    [System.Windows.MessageBox]::Show("Perfil local listo.`n`nAhora introduce tu código de acceso.`nAVISO: esta versión valida códigos de demostración dentro del script; todavía no crea cuentas únicas verificadas en un servidor.", "Éxito", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
     
     # Transición limpia hacia Login
     $vRegister.Visibility = "Collapsed"
@@ -723,7 +992,23 @@ try {
 $txtChat = $windowMain.FindName('TxtAiChat')
 $txtInput = $windowMain.FindName('TxtAiInput')
 $aiStatus = $windowMain.FindName('LblAiStatus')
-$global:K0R1LastAnswer = 'AURA lista. Pregúntame por FPS, componentes o ajustes.'
+$global:K0R1LastAnswer = 'K0R1 Optimizer está listo. Indícame qué sistema deseas analizar.'
+
+function ConvertTo-K0R1SpeechText([string]$Text) {
+    if ([string]::IsNullOrWhiteSpace($Text)) { return 'No hay respuesta para leer.' }
+    $spoken = $Text -replace '(?m)^\s*[#>*•\-]+\s*', ''
+    $spoken = $spoken -replace '[`*_]', ''
+    $spoken = $spoken -replace '(?i)\bCPU\b', 'procesador'
+    $spoken = $spoken -replace '(?i)\bGPU\b', 'tarjeta gráfica'
+    $spoken = $spoken -replace '(?i)\bRAM\b', 'memoria RAM'
+    $spoken = $spoken -replace '(?i)\bFPS\b', 'fotogramas por segundo'
+    $spoken = $spoken -replace '(?i)\bN/D\b', 'no disponible'
+    $spoken = $spoken -replace '[\r\n]+', '. '
+    $spoken = $spoken -replace '\s{2,}', ' '
+    if ($spoken.Length -gt 1800) { $spoken = $spoken.Substring(0, 1800) + '. Resumen de voz limitado para mantener la interfaz ágil.' }
+    return $spoken.Trim()
+}
+
 
 function Get-K0R1LocalHardwareSummary {
     try {
@@ -734,6 +1019,28 @@ function Get-K0R1LocalHardwareSummary {
         return [pscustomobject]@{ CPU=[string]$cpu.Name; GPU=($gpu -join ' | '); RAM=$ram; Windows=[string]$os.Caption }
     } catch { return $null }
 }
+# --- Diagnóstico AURA AI / Ollama ---
+# Solo consulta el endpoint local; no descarga modelos, no cambia ajustes ni envía datos a la nube.
+function Test-K0R1LocalAI {
+    try {
+        $response = Invoke-RestMethod -Uri 'http://127.0.0.1:11434/api/tags' -Method Get -TimeoutSec 3 -ErrorAction Stop
+        $models = @($response.models | ForEach-Object { [string]$_.name })
+        [pscustomobject]@{
+            Disponible = $true
+            Endpoint = 'http://127.0.0.1:11434'
+            Modelos = $models
+            Mensaje = if ($models.Count -gt 0) { 'Ollama activo; modelos detectados.' } else { 'Ollama activo, pero no hay modelos descargados.' }
+        }
+    } catch {
+        [pscustomobject]@{
+            Disponible = $false
+            Endpoint = 'http://127.0.0.1:11434'
+            Modelos = @()
+            Mensaje = 'Ollama no responde. Inicia Ollama y comprueba que el servicio local esté disponible.'
+        }
+    }
+}
+
 function Get-K0R1OllamaAnswer([string]$question) {
     # Motor de IA real opcional: Ollama ejecutado localmente. No usa API key ni manda el chat a la nube.
     # Si Ollama/modelo no está disponible, el asistente continúa con el motor local integrado.
@@ -746,8 +1053,8 @@ function Get-K0R1OllamaAnswer([string]$question) {
         $hw = Get-K0R1LocalHardwareSummary
         $hardwareContext = if ($hw) { "Hardware detectado: CPU=$($hw.CPU); GPU=$($hw.GPU); RAM=$($hw.RAM) GB; Sistema=$($hw.Windows)." } else { 'No se pudo detectar el hardware.' }
         $systemPrompt = @"
-Eres K0R1 AURA, un asistente técnico útil, claro y honesto integrado en una app de Windows para gaming competitivo, especialmente Fortnite. Responde siempre en español, con pasos prácticos y ordenados. $hardwareContext
-Prioriza estabilidad, baja latencia, seguridad y cambios reversibles. No inventes mediciones, temperaturas, FPS exactos ni resultados. Si estimas FPS, aclara que son aproximados y dependen de mapa, versión, ajustes y procesos. No recomiendes desactivar Defender/firewall, borrar archivos personales, ejecutar comandos destructivos, modificar voltajes ni overclock automático. Para cambios delicados, explica riesgos y pide confirmación antes de actuar. Esta app no ejecuta acciones solo por conversar: ofrece instrucciones, no afirmes que ya cambiaste el PC. Si no sabes algo, dilo y pide el dato concreto que falta. Mantén las respuestas útiles, con encabezados y listas cuando ayuden.
+Eres K0R1 OPTIMIZER, asistente de IA con personalidad de mayordomo tecnológico elegante, sereno, preciso y ligeramente ingenioso, inspirado en el arquetipo de un asistente cinematográfico de alta tecnología, sin afirmar ser JARVIS ni copiar frases protegidas. Habla en español natural, con frases concisas y seguridad tranquila: puedes iniciar con “A la orden” o “Diagnóstico completado” cuando encaje, pero no repitas muletillas en cada respuesta. Explica qué detectaste, qué significa y qué debe hacer el usuario, paso a paso. No suenes robótico ni exageres. Responde siempre en español, con pasos prácticos y ordenados. $hardwareContext
+Usa conocimiento general de informática, Windows, hardware, redes, latencia, gaming y diagnóstico disponible en el modelo local; no afirmes contener toda la base de datos de ChatGPT ni inventes acceso a Internet. Para información actual, indica que hace falta verificar fuentes. Puedes recomendar conceptos públicos conocidos de optimización como los enfoques de Chris Titus Tech (desinstalación selectiva, control de inicio, privacidad y ajustes reversibles), pero no copies scripts propietarios ni ejecutes debloat masivo sin revisión. Prioriza estabilidad, baja latencia, seguridad y cambios reversibles. No inventes mediciones, temperaturas, FPS exactos ni resultados. Si estimas FPS, aclara que son aproximados y dependen de mapa, versión, ajustes y procesos. No recomiendes desactivar Defender/firewall, borrar archivos personales, ejecutar comandos destructivos, modificar voltajes ni overclock automático. Para cambios delicados, explica riesgos y pide confirmación antes de actuar. Esta app no ejecuta acciones solo por conversar: ofrece instrucciones, no afirmes que ya cambiaste el PC. Si no sabes algo, dilo y pide el dato concreto que falta. Mantén las respuestas útiles, con encabezados y listas cuando ayuden.
 "@
         $body = @{
             model = $model
@@ -793,10 +1100,10 @@ function Get-K0R1LocalAnswer([string]$question) {
         return "AURA // PERFIL FORTNITE COMPETITIVO`nPrueba 1720×1080, modo Rendimiento, sombras desactivadas/bajas, efectos y postprocesado bajos, V-Sync desactivado y límite de FPS estable acorde a tu monitor. Compara partidas reales y cambia una opción a la vez. Si aparecen tirones, revisa RAM, temperaturas y procesos en segundo plano."
     }
     if ($q -match 'hola|buenas|buenos dias|buenas tardes|hey|jarvis|aura') {
-        return 'A la orden. Sistemas locales operativos. Puedo analizar tu hardware, estimar FPS de Fortnite y recomendar ajustes competitivos seguros. Pregunta por FPS, componentes o tweaks.'
+        return 'A la orden. K0R1 Optimizer está operativo. Indícame si deseas un diagnóstico de hardware, latencia o rendimiento. Puedo analizar tu hardware, estimar FPS de Fortnite y recomendar ajustes competitivos seguros. Pregunta por FPS, componentes o tweaks.'
     }
     $hardwareNote = if ($hw) { "Detecté CPU $cpuText, GPU $gpuText y $ramText de RAM." } else { 'Aún no he podido detectar tus componentes.' }
-    return "AURA // ASISTENTE LOCAL`nPuedo ayudarte con FPS, componentes, Fortnite y optimización de Windows sin API ni clave.`n`nEjemplos:`n• ¿Cuántos FPS puedo sacar?`n• Analiza mis componentes`n• Dame tweaks seguros para Fortnite`n• Recomienda ajustes competitivos`n`n$hardwareNote"
+    return "K0R1 OPTIMIZER // ASISTENTE LOCAL`nPuedo ayudarte con FPS, componentes, Fortnite y optimización de Windows sin API ni clave.`n`nEjemplos:`n• ¿Cuántos FPS puedo sacar?`n• Analiza mis componentes`n• Dame tweaks seguros para Fortnite`n• Recomienda ajustes competitivos`n`n$hardwareNote"
 }
 $enviarMensajeAi = {
     $pregunta = $txtInput.Text.Trim()
@@ -822,13 +1129,13 @@ $enviarMensajeAi = {
         }
     }
     $global:K0R1LastAnswer = $respuestaAi
-    $txtChat.AppendText("`r`nK0R1 AURA: $respuestaAi`r`n`r`n")
+    $txtChat.AppendText("`r`nK0R1 OPTIMIZER: $respuestaAi`r`n`r`n")
     $txtChat.ScrollToEnd()
-    try { $synth.SpeakAsyncCancelAll(); $null = $synth.SpeakAsync($respuestaAi) } catch {}
+    try { $spoken = ConvertTo-K0R1SpeechText ([string]$respuestaAi); $synth.SpeakAsyncCancelAll(); $null = $synth.SpeakAsync($spoken) } catch {}
 }
 $windowMain.FindName('BtnAiSend').Add_Click($enviarMensajeAi)
 $txtInput.Add_KeyDown({ if ($_.Key -eq 'Enter') { & $enviarMensajeAi } })
-$windowMain.FindName('BtnAiSpeak').Add_Click({ try { $synth.SpeakAsyncCancelAll(); $null = $synth.SpeakAsync($global:K0R1LastAnswer) } catch {} })
+$windowMain.FindName('BtnAiSpeak').Add_Click({ try { $spoken = ConvertTo-K0R1SpeechText ([string]$global:K0R1LastAnswer); $synth.SpeakAsyncCancelAll(); $null = $synth.SpeakAsync($spoken) } catch {} })
 
 # --- DETECCIÓN DE COMPONENTES Y ESTIMACIÓN PRUDENTE DE FPS ---
 $windowMain.FindName("BtnDetectHardwareFPS").Add_Click({
@@ -1042,6 +1349,68 @@ $windowMain.FindName('BtnNetworkTest').Add_Click({
     try { $r = Test-Connection -ComputerName '1.1.1.1' -Count 4 -ErrorAction Stop; $avg = [math]::Round((($r | Measure-Object -Property ResponseTime -Average).Average),1); $label.Text = "Respuesta media aproximada: $avg ms (ICMP). Esto no equivale exactamente al ping de Fortnite." }
     catch { $label.Text = 'No se obtuvo respuesta ICMP. Tu red puede bloquear esta prueba; no significa necesariamente que no tengas internet.' }
 })
+$windowMain.FindName('BtnOpenWebsite').Add_Click({
+    Start-Process 'https://andresccccccc6-ops.github.io/K0R1-AURA-JARVIS2/'
+})
+$windowMain.FindName('BtnWebFeatures').Add_Click({
+    $windowMain.FindName('ViewTweaks').Visibility = 'Visible'
+    $windowMain.FindName('ViewInicio').Visibility = 'Collapsed'
+    $windowMain.FindName('NavTweaks').RaiseEvent([System.Windows.RoutedEventArgs]::new([System.Windows.Controls.Button]::ClickEvent))
+})
+$windowMain.FindName('BtnLanScan').Add_Click({
+    $label = $windowMain.FindName('LblNetworkResult')
+    $label.Text = 'Analizando adaptadores activos y equipos de la red local…'
+    try {
+        $cfg = Get-NetIPConfiguration -ErrorAction Stop |
+            Where-Object { $_.IPv4Address -and $_.NetAdapter.Status -eq 'Up' -and $_.IPv4DefaultGateway } |
+            Select-Object -First 1
+        if (-not $cfg) { throw 'No encontré un adaptador IPv4 activo con puerta de enlace.' }
+        $ip = [string]$cfg.IPv4Address.IPAddress
+        $prefix = [int]$cfg.IPv4Address.PrefixLength
+        if ($prefix -lt 16 -or $prefix -gt 30) {
+            $label.Text = "Tu IP es $ip/$prefix. La máscara es demasiado amplia o especial para un escaneo seguro automático. Revisa el router para ver los dispositivos conectados."
+            return
+        }
+        $parts = $ip.Split('.') | ForEach-Object { [int]$_ }
+        $ipInt = ([uint32]$parts[0] -shl 24) -bor ([uint32]$parts[1] -shl 16) -bor ([uint32]$parts[2] -shl 8) -bor [uint32]$parts[3]
+        $mask = [uint32](([uint64]0xFFFFFFFF -shl (32 - $prefix)) -band 0xFFFFFFFF)
+        $network = $ipInt -band $mask
+        $broadcast = $network -bor ([uint32]0xFFFFFFFF -bxor $mask)
+        $hostCount = [int]($broadcast - $network - 1)
+        if ($hostCount -gt 512) { throw "La red contiene $hostCount direcciones posibles; por seguridad, este escaneo está limitado a 512." }
+
+        $found = New-Object System.Collections.Generic.List[string]
+        $found.Add("Este equipo: $ip")
+        $found.Add("Adaptador: $($cfg.InterfaceAlias) · puerta de enlace: $($cfg.IPv4DefaultGateway.NextHop)")
+        $found.Add("Buscando respuestas en $ip/$prefix (hasta $hostCount direcciones)…")
+        for ($n = [uint64]($network + 1); $n -lt [uint64]$broadcast; $n++) {
+            if ($n -eq [uint64]$ipInt) { continue }
+            $a = [int](($n -shr 24) -band 255); $b = [int](($n -shr 16) -band 255)
+            $c = [int](($n -shr 8) -band 255); $d = [int]($n -band 255)
+            $target = "$a.$b.$c.$d"
+            try {
+                $reply = Test-Connection -ComputerName $target -Count 1 -Quiet -ErrorAction SilentlyContinue
+                if ($reply) {
+                    $name = ''
+                    try { $name = [System.Net.Dns]::GetHostEntry($target).HostName } catch {}
+                    if ($name) { $found.Add("$target  ·  $name") } else { $found.Add($target) }
+                }
+            } catch {}
+        }
+        try {
+            $neighbors = Get-NetNeighbor -AddressFamily IPv4 -ErrorAction SilentlyContinue |
+                Where-Object { $_.InterfaceIndex -eq $cfg.InterfaceIndex -and $_.State -notin @('Unreachable','Incomplete') -and $_.IPAddress -ne $ip }
+            foreach ($neighbor in $neighbors) {
+                $entry = "$($neighbor.IPAddress)  ·  MAC $($neighbor.LinkLayerAddress)  ·  $($neighbor.State)"
+                if (-not ($found -contains $entry)) { $found.Add($entry) }
+            }
+        } catch {}
+        $label.Text = ($found -join "`r`n")
+        $label.Text += "`r`n`r`nNota: los dispositivos que bloquean ICMP pueden no responder. Para una lista completa, consulta la app/página del router."
+    } catch {
+        $label.Text = "No se pudo descubrir la red local: $($_.Exception.Message)"
+    }
+})
 $windowMain.FindName('BtnDetectGpu').Add_Click({
     try { $g = @(Get-CimInstance Win32_VideoController | ForEach-Object Name); $windowMain.FindName('LblDetectedGpu').Text = ($g -join ' | '); $windowMain.FindName('LblDriverAdvice').Text = 'Descarga el controlador únicamente del fabricante correspondiente y reinicia si el instalador lo solicita.' }
     catch { $windowMain.FindName('LblDetectedGpu').Text = 'No se pudo detectar la GPU.' }
@@ -1068,7 +1437,91 @@ $windowMain.FindName('BtnCleanTemp').Add_Click({
     try { $items = @(Get-ChildItem -LiteralPath $env:TEMP -Force -ErrorAction SilentlyContinue); $count=0; foreach ($item in $items) { try { Remove-Item -LiteralPath $item.FullName -Recurse -Force -ErrorAction Stop; $count++ } catch {} }; Show-K0R1Message 'Limpieza completada' "Se limpiaron $count elementos temporales. Los archivos bloqueados se omitieron; no se tocaron Descargas ni documentos." }
     catch { Show-K0R1Message 'Limpieza' 'No se pudo completar la limpieza.' ([System.Windows.MessageBoxImage]::Warning) }
 })
-$windowMain.FindName('BtnApplyRgb').Add_Click({ $selected = $windowMain.FindName('CmbRgbColors').SelectedItem; $name = if ($selected) { [string]$selected.Content } else { 'Morado K0R1' }; Show-K0R1Message 'Perfil RGB' "Perfil visual seleccionado: $name`nEste ajuste solo cambia la selección en K0R1; para cambiar los LED físicos se necesita el software compatible con tu placa o periférico." })
+$windowMain.FindName('BtnApplyRgb').Add_Click({
+    $selected = $windowMain.FindName('CmbRgbColors').SelectedItem
+    $name = if ($selected) { [string]$selected.Content } else { 'Morado K0R1' }
+    $openRgb = Get-Command 'OpenRGB.exe' -ErrorAction SilentlyContinue
+    $candidates = @(
+        (Join-Path $env:ProgramFiles 'OpenRGB\OpenRGB.exe'),
+        (Join-Path ${env:ProgramFiles(x86)} 'OpenRGB\OpenRGB.exe'),
+        (Join-Path $env:LOCALAPPDATA 'Programs\OpenRGB\OpenRGB.exe')
+    ) | Where-Object { $_ -and (Test-Path -LiteralPath $_) }
+    $rgbExe = if ($openRgb) { $openRgb.Source } elseif ($candidates) { $candidates | Select-Object -First 1 } else { $null }
+    if ($rgbExe) {
+        try { Start-Process -FilePath $rgbExe; Show-K0R1Message 'Control RGB compatible' "Se abrió OpenRGB. Selecciona el dispositivo y aplica el perfil '$name' dentro de OpenRGB. K0R1 no fuerza cambios sin conocer el controlador." }
+        catch { Show-K0R1Message 'RGB' "No pude abrir OpenRGB: $($_.Exception.Message)" ([System.Windows.MessageBoxImage]::Warning) }
+    } else {
+        Show-K0R1Message 'RGB físico no detectado' "Perfil seleccionado: $name`nK0R1 no puede cambiar físicamente los ventiladores de forma universal. Instala OpenRGB desde su sitio oficial si tu placa/controlador aparece como compatible, o usa el programa del fabricante (Gigabyte Control Center/RGB Fusion, ASUS Armoury Crate, MSI Center/Mystic Light, Corsair iCUE). No instales controladores RGB de sitios desconocidos."
+        Start-Process 'https://openrgb.org/'
+    }
+})
+
+$btnSecurityAudit = $windowMain.FindName('BtnSecurityAudit')
+if ($btnSecurityAudit) { $btnSecurityAudit.Add_Click({ try { Show-K0R1Message 'Auditoría de seguridad (solo lectura)' (Get-K0R1SecuritySummary) } catch { Show-K0R1Message 'Auditoría' $_.Exception.Message ([System.Windows.MessageBoxImage]::Warning) } }) }
+
+$btnStartupSettings = $windowMain.FindName('BtnOpenStartupSettings')
+if ($btnStartupSettings) { $btnStartupSettings.Add_Click({ try { Start-Process 'ms-settings:startupapps' } catch { Show-K0R1Message 'Inicio de Windows' 'No se pudo abrir Configuración.' ([System.Windows.MessageBoxImage]::Warning) } }) }
+$btnWindowsSecurity = $windowMain.FindName('BtnOpenWindowsSecurity')
+if ($btnWindowsSecurity) { $btnWindowsSecurity.Add_Click({ try { Start-Process 'windowsdefender:' } catch { try { Start-Process 'ms-settings:windowsdefender' } catch { Show-K0R1Message 'Seguridad' 'Abre Seguridad de Windows desde el menú Inicio.' ([System.Windows.MessageBoxImage]::Warning) } } }) }
+
+# --- SEGURIDAD LOCAL ADICIONAL (DPAPI) ---
+# Utilidad para futuros datos locales sensibles. DPAPI CurrentUser liga el archivo al usuario
+# de Windows; no sustituye validación de licencias en servidor ni protege el código fuente.
+function Protect-K0R1LocalText([string]$PlainText, [string]$FilePath) {
+    if ([string]::IsNullOrEmpty($PlainText)) { throw 'No hay contenido que proteger.' }
+    $secureBytes = [System.Text.Encoding]::UTF8.GetBytes($PlainText)
+    $protected = [System.Security.Cryptography.ProtectedData]::Protect(
+        $secureBytes, $null, [System.Security.Cryptography.DataProtectionScope]::CurrentUser)
+    $directory = Split-Path -Parent $FilePath
+    if ($directory -and -not (Test-Path -LiteralPath $directory)) { New-Item -ItemType Directory -Path $directory -Force | Out-Null }
+    [System.IO.File]::WriteAllBytes($FilePath, $protected)
+}
+function Unprotect-K0R1LocalText([string]$FilePath) {
+    if (-not (Test-Path -LiteralPath $FilePath)) { throw 'No existe el archivo protegido.' }
+    $protected = [System.IO.File]::ReadAllBytes($FilePath)
+    $plain = [System.Security.Cryptography.ProtectedData]::Unprotect(
+        $protected, $null, [System.Security.Cryptography.DataProtectionScope]::CurrentUser)
+    [System.Text.Encoding]::UTF8.GetString($plain)
+}
+
+# Diagnóstico de seguridad de solo lectura: no desactiva Defender ni el firewall.
+function Get-K0R1SecuritySummary {
+    $items = [System.Collections.Generic.List[string]]::new()
+    $items.Add("PowerShell: $($PSVersionTable.PSVersion)")
+    $items.Add("Windows: $([Environment]::OSVersion.VersionString)")
+    try {
+        $secureBoot = Confirm-SecureBootUEFI -ErrorAction Stop
+        $items.Add("Secure Boot: $secureBoot")
+    } catch { $items.Add('Secure Boot: no disponible en este equipo/firmware') }
+    try {
+        $mp = Get-MpComputerStatus -ErrorAction Stop
+        $items.Add("Microsoft Defender activo: $($mp.AntivirusEnabled)")
+        $items.Add("Protección en tiempo real: $($mp.RealTimeProtectionEnabled)")
+    } catch { $items.Add('Defender: estado no disponible (permisos o proveedor no disponible)') }
+    try {
+        $fw = Get-NetFirewallProfile -ErrorAction Stop
+        $enabled = @($fw | Where-Object { $_.Enabled }).Count
+        $items.Add("Perfiles de firewall activos: $enabled de $(@($fw).Count)")
+    } catch { $items.Add('Firewall: estado no disponible') }
+    return ($items -join "`r`n")
+}
+
+# --- K0R1 OPTIMIZER: perfiles seguros inspirados en prácticas públicas de optimización ---
+# No replica código de terceros. Cada acción es explícita y reversible.
+function Get-K0R1OptimizationChecklist {
+    [pscustomobject]@{
+        Titulo = 'Perfil competitivo seguro'
+        Pasos = @(
+            'Crear un punto de restauración o respaldo antes de cambios del sistema.',
+            'Revisar aplicaciones de inicio y deshabilitar solo las que el usuario reconoce y no necesita.',
+            'Activar Modo Juego de Windows y desactivar capturas en segundo plano solo si no se usan.',
+            'Seleccionar el plan de energía adecuado al equipo; vigilar consumo y temperatura.',
+            'Actualizar el driver desde AMD, NVIDIA o Intel oficiales.',
+            'Medir FPS medios, 1% lows, ping y temperaturas antes y después en la misma escena.',
+            'No desactivar Defender/firewall, no aplicar debloat masivo, ni cambiar voltajes automáticamente.'
+        )
+    }
+}
 
 # --- MONITOR DE PORCENTAJES: CPU/RAM REALES; GPU SOLO SI HAY CONTADOR DISPONIBLE ---
 function Update-K0R1Metrics {
@@ -1099,7 +1552,7 @@ function Update-K0R1Metrics {
         $windowMain.FindName("LblRamVal").Text = "N/D"
         $windowMain.FindName("BarRam").Value = 0
     }
-    # Intenta obtener uso real de motores GPU (3D). Si el contador no existe, muestra N/D.
+    # Intenta obtener uso de motores GPU (3D) reportado por Windows. El máximo por motor no equivale necesariamente a carga total de GPU; si no hay contador, muestra N/D.
     try {
         $gpuCounters = Get-Counter -ListSet "GPU Engine" -ErrorAction Stop
         $gpuSamples = Get-Counter -Counter '\GPU Engine(*)\Utilization Percentage' -ErrorAction Stop
@@ -1112,6 +1565,22 @@ function Update-K0R1Metrics {
     } catch {
         $windowMain.FindName("LblGpuVal").Text = "N/D"
         $windowMain.FindName("BarGpu").Value = 0
+    }
+    # La zona térmica ACPI no existe en todos los equipos y puede informar valores ficticios.
+    # Solo mostramos el dato si el proveedor entrega una lectura plausible; no se convierte a °C a ciegas.
+    try {
+        $tempLabel = $windowMain.FindName("LblTempVal")
+        if ($tempLabel) {
+            $thermal = @(Get-CimInstance -Namespace 'root/wmi' -ClassName MSAcpi_ThermalZoneTemperature -ErrorAction Stop | Where-Object { $_.CurrentTemperature -gt 0 })
+            $celsius = @($thermal | ForEach-Object { ([double]$_.CurrentTemperature / 10.0) - 273.15 } | Where-Object { $_ -ge 10 -and $_ -le 110 })
+            if ($celsius.Count -gt 0) {
+                $maxTemp = [int][math]::Round(($celsius | Measure-Object -Maximum).Maximum)
+                $tempLabel.Text = "Temperatura ACPI: $maxTemp °C (sensor de placa; no siempre es CPU/GPU)"
+            } else { $tempLabel.Text = 'Temperatura CPU/GPU: N/D · sensor compatible no disponible' }
+        }
+    } catch {
+        $tempLabel = $windowMain.FindName("LblTempVal")
+        if ($tempLabel) { $tempLabel.Text = 'Temperatura CPU/GPU: N/D · requiere sensor compatible' }
     }
 }
 Update-K0R1Metrics
