@@ -1,1067 +1,130 @@
+
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="K0R1 AURA JARVIS: herramientas de diagnóstico para Windows 11 y gaming.">
-<meta name="theme-color" content="#090713"><title>K0R1 AURA JARVIS</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="K0R1 AURA JARVIS: herramientas de diagnóstico y utilidades para Windows 11 y gaming.">
+<meta name="theme-color" content="#090713">
+<title>K0R1 AURA JARVIS</title>
 <style>
-:root{color-scheme:dark;--bg:#090713;--panel:#141024;--line:#30234c;--text:#f4efff;--muted:#b8adc9;--purple:#a855f7;--cyan:#67e8f9}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% 0%,#32145b 0,transparent 36%),radial-gradient(ellipse at 0% 45%,#151a42 0,transparent 32%),var(--bg);font-family:Segoe UI,Arial,sans-serif;color:var(--text);line-height:1.6}
-.wrap{width:min(1100px,92%);margin:auto}header{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid #ffffff12}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.08em}.logo{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--purple),#5136d9);box-shadow:0 0 28px #a855f755;font-size:20px}nav{display:flex;gap:20px;font-size:14px;color:var(--muted)}nav a{text-decoration:none}nav a:hover{color:var(--cyan)}
-.hero{padding:80px 0 65px;display:grid;grid-template-columns:1.3fr .7fr;gap:38px;align-items:center}.eyebrow{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}h1{font-size:clamp(42px,7vw,76px);line-height:1.02;letter-spacing:-.055em;margin:16px 0 22px}.gradient{background:linear-gradient(90deg,#fff,var(--cyan),#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{font-size:18px;color:var(--muted);max-width:650px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:750;border:1px solid var(--line);background:#ffffff08}.btn.primary{background:linear-gradient(135deg,#9333ea,#5b4bdb);border-color:#b58bff55}.btn:hover{filter:brightness(1.12)}
-.orb-wrap{display:grid;place-items:center;min-height:280px}.orb{width:min(270px,70vw);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:conic-gradient(from 20deg,transparent,#8b5cf6,#67e8f9,#8b5cf6,transparent);padding:3px;box-shadow:0 0 65px #8b5cf644}.orb:before{content:"K0R1";font-size:38px;font-weight:900;letter-spacing:.15em;display:grid;place-items:center;background:radial-gradient(circle,#19132a,#0b0915 70%);width:100%;height:100%;border-radius:50%;text-shadow:0 0 24px #a855f7}
-section{padding:40px 0}.section-title{font-size:clamp(26px,4vw,38px);margin:0 0 8px}.section-sub{color:var(--muted);margin:0 0 24px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{padding:22px;border:1px solid var(--line);background:linear-gradient(145deg,#ffffff08,#ffffff03);border-radius:18px}.ico{font-size:24px;margin-bottom:10px}.card h3{margin:0 0 8px}.card p{color:var(--muted);margin:0}.install{display:grid;grid-template-columns:1fr 1fr;gap:22px}.steps{padding:22px;border:1px solid var(--line);background:var(--panel);border-radius:18px}.steps ol{padding-left:22px;color:var(--muted)}.steps li{margin:8px 0}.note{border-left:3px solid var(--cyan);padding:12px 15px;background:#67e8f90b;color:var(--muted);border-radius:0 10px 10px 0}footer{margin-top:40px;border-top:1px solid #ffffff12;padding:25px 0 38px;color:var(--muted);font-size:13px}
-@media(max-width:760px){nav{display:none}.hero{grid-template-columns:1fr;padding:55px 0 40px}.orb-wrap{min-height:210px}.orb{width:205px}.cards{grid-template-columns:1fr}.install{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-</style></head>
+:root{color-scheme:dark;--bg:#090713;--panel:#151024;--line:#382653;--txt:#f5f0ff;--muted:#bdb1d1;--purple:#a855f7;--cyan:#67e8f9}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 75% 0,#32145b 0,transparent 38%),var(--bg);color:var(--txt);font:16px/1.6 "Segoe UI",Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1080px,92%);margin:auto}
+header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid #ffffff18}
+.brand{font-weight:900;letter-spacing:2px}
+.brand b{color:#c084fc}
+.nav{display:flex;gap:18px;color:var(--muted);font-size:14px}
+.hero{display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:center;padding:72px 0 48px}
+.tag{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:3px;text-transform:uppercase}
+h1{font-size:clamp(40px,7vw,72px);line-height:1.03;letter-spacing:-2px;margin:14px 0}
+.grad{background:linear-gradient(90deg,#fff,var(--cyan),#c084fc);color:transparent;background-clip:text}
+p{color:var(--muted)}
+.lead{font-size:18px;max-width:650px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.btn{display:inline-flex;justify-content:center;align-items:center;padding:12px 18px;border:1px solid var(--line);border-radius:12px;background:#ffffff0a;font-weight:800}
+.btn.primary{background:linear-gradient(135deg,#9333ea,#5145cd);border-color:#bd91ff}
+.orb{width:min(255px,65vw);aspect-ratio:1;margin:auto;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#8b5cf6,#67e8f9,#8b5cf6);padding:4px;box-shadow:0 0 55px #8b5cf655}
+.orb span{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#211535,#090713 70%);font-size:38px;font-weight:900;letter-spacing:5px}
+section{padding:28px 0}
+.heading{font-size:clamp(26px,4vw,36px);margin:0 0 8px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:20px}
+.card,.panel{padding:20px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#ffffff0c,#ffffff04)}
+.card h3{margin:8px 0}
+.card p{margin:0}
+.icon{font-size:25px}
+.download{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.panel ol{padding-left:22px;color:var(--muted)}
+.panel li{margin:8px 0}
+.note{border-left:3px solid var(--cyan);padding:10px 14px;background:#67e8f90b;border-radius:0 9px 9px 0}
+small,.muted{color:var(--muted)}
+footer{margin-top:35px;padding:25px 0;border-top:1px solid #ffffff18;color:var(--muted);font-size:13px}
+@media(max-width:740px){.nav{display:none}.hero,.download{grid-template-columns:1fr}.hero{padding:48px 0 30px}.orb{width:190px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
 <body>
-<header class="wrap"><div class="brand"><div class="logo">K</div><span>K0R1 <span style="color:#c084fc">AURA JARVIS</span></span></div><nav><a href="#funciones">Funciones</a><a href="#instalacion">Instalación</a><a href="#seguridad">Seguridad</a></nav></header>
-<main>
-<section class="hero wrap"><div><div class="eyebrow">Asistente de escritorio · Windows</div><h1>Controla tu sistema.<br><span class="gradient">Entra en modo AURA.</span></h1><p class="lead">K0R1 AURA JARVIS reúne herramientas de diagnóstico y accesos útiles para Windows 11 y gaming en una interfaz inspirada en un panel futurista.</p><div class="actions"><a class="btn primary" href="#instalacion">Cómo instalarlo ↓</a><a class="btn" href="#funciones">Explorar funciones</a></div></div><div class="orb-wrap" aria-label="Diseño decorativo K0R1"><div class="orb"></div></div></section>
-<section id="funciones" class="wrap"><div class="eyebrow">Módulos del sistema</div><h2 class="section-title">Herramientas con propósito</h2><p class="section-sub">Funciones orientadas a revisar el sistema y acceder a configuraciones de forma clara.</p><div class="cards">
-<article class="card"><div class="ico">◈</div><h3>Almacenamiento</h3><p>Consulta el espacio libre y usado en las unidades y detecta discos con poco espacio.</p></article>
-<article class="card"><div class="ico">⌁</div><h3>Procesos y arranque</h3><p>Revisa procesos activos y entradas de inicio sin cerrar procesos ni desactivar programas automáticamente.</p></article>
-<article class="card"><div class="ico">⌘</div><h3>Diagnóstico DNS</h3><p>Comprueba la resolución de nombres y ofrece una opción confirmada para vaciar la caché DNS.</p></article>
-<article class="card"><div class="ico">▣</div><h3>Ajustes gráficos</h3><p>Acceso a la configuración gráfica de Windows para revisar preferencias por aplicación.</p></article>
-<article class="card"><div class="ico">◉</div><h3>Windows 11</h3><p>Interfaz de escritorio para herramientas y diagnósticos del sistema.</p></article>
-<article class="card"><div class="ico">✧</div><h3>Enfoque gaming</h3><p>Organiza comprobaciones antes de jugar; el rendimiento depende del equipo y su configuración.</p></article></div></section>
-<section id="instalacion" class="wrap"><div class="eyebrow">Primeros pasos</div><h2 class="section-title">Cómo usar K0R1</h2><p class="section-sub">Esta página es informativa: no ejecuta scripts dentro del navegador.</p><div class="install"><div class="steps"><h3>Instalación en Windows</h3><ol><li>Descarga el proyecto desde el repositorio del autor.</li><li>Extrae todos los archivos en la misma carpeta.</li><li>Revisa el contenido de <code>INICIAR.bat</code> y del script PowerShell.</li><li>Ejecuta el inicio solo si confías en el origen y entiendes los permisos que solicita.</li></ol></div><div 
-class="steps"><h3>Código y descargas</h3><p style="color:var(--muted)">Descarga K0R1 AURA JARVIS para Windows.</p><div class="actions"><a class="btn primary" href="https://github.com/andresccccccc6-ops/K0R1-AURA-JARVIS2/archive/refs/heads/main.zip">⬇ Descargar K0R1 (ZIP)</a><a class="btn" href="https://github.com/andresccccccc6-ops/K0R1-AURA-JARVIS2">Ver código fuente</a></div><p class="note">Descarga el ZIP y extrae los archivos antes de ejecutar K0R1.</p></div></div></section>
-s.</p></div></div></section></p></div></div></section>
-<section id="seguridad" class="wrap"><div class="eyebrow">Uso responsable</div><h2 class="section-title">Transparencia y seguridad</h2><p class="section-sub">Revisa el código antes de ejecutarlo, conserva copias de seguridad y evita publicar información privada. No se garantiza un aumento específico de FPS. Proyecto independiente, no afiliado a Microsoft ni a Epic Games.</p></section>
-</main><footer><div class="wrap">© <span id="year"></span> K0R1 AURA JARVIS · Proyecto independiente.</div></footer><script>document.getElementById('year').textContent=new Date().getFullYear();</script>
-</body></html>
-<!-- K0R1 AURA JARVIS - TIENDA DIGITAL -->
-<section id="tienda-k0r1" class="wrap" style="padding:50px 20px;color:#fff">
-  <div class="eyebrow">K0R1 STORE</div>
-  <h2 class="section-title">Tienda digital</h2>
-  <p class="section-sub">
-    Explora los programas y agrega tus productos al carrito.
-  </p>
+<header class="wrap">
+<div class="brand">K0R1 <b>AURA JARVIS</b></div>
+<nav class="nav">
+<a href="#funciones">Funciones</a>
+<a href="#descarga">Descarga</a>
+<a href="#seguridad">Seguridad</a>
+</nav>
+</header>
 
-  <style>
-    #tienda-k0r1 .store-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:18px;
-      margin:24px 0;
-    }
-    #tienda-k0r1 .store-card,
-    #tienda-k0r1 .cart-box {
-      background:rgba(15,18,40,.92);
-      border:1px solid #34345f;
-      border-radius:16px;
-      padding:20px;
-    }
-    #tienda-k0r1 .store-card h3 { margin-top:0; }
-    #tienda-k0r1 .store-price {
-      color:#a99cff;
-      font-size:24px;
-      font-weight:800;
-      margin:16px 0;
-    }
-    #tienda-k0r1 .store-btn {
-      background:#7257ff;
-      color:white;
-      border:0;
-      padding:11px 15px;
-      border-radius:9px;
-      cursor:pointer;
-      font-weight:700;
-    }
-    #tienda-k0r1 .store-btn:hover { background:#8b76ff; }
-    #tienda-k0r1 .cart-line {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      padding:12px 0;
-      border-bottom:1px solid #34345f;
-    }
-    #tienda-k0r1 .cart-line button {
-      cursor:pointer;
-      margin-left:6px;
-    }
-    #tienda-k0r1 .store-muted { color:#b9bad3; }
-    #tienda-k0r1 input {
-      width:100%;
-      box-sizing:border-box;
-      padding:12px;
-      margin:6px 0 14px;
-      border-radius:8px;
-      border:1px solid #454568;
-      background:#101329;
-      color:white;
-    }
-    #tienda-k0r1 .store-total {
-      font-size:22px;
-      font-weight:800;
-      margin:18px 0;
-    }
-  </style>
-
-  <div id="k0r1-products" class="store-grid"></div>
-
-  <div class="cart-box">
-    <h3>🛒 Tu carrito</h3>
-    <div id="k0r1-cart" aria-live="polite">
-      <p class="store-muted">Tu carrito está vacío.</p>
-    </div>
-    <div class="store-total">
-      Total: <span id="k0r1-total">$0.00 MXN</span>
-    </div>
-
-    <h3>Preparar pedido</h3>
-    <label for="k0r1-customer">Tu nombre</label>
-    <input id="k0r1-customer" maxlength="80"
-           autocomplete="name" placeholder="Nombre">
-
-    <label for="k0r1-email">Tu correo electrónico</label>
-    <input id="k0r1-email" type="email" maxlength="120"
-           autocomplete="email" placeholder="correo@ejemplo.com">
-
-    <button class="store-btn" id="k0r1-order">
-      Preparar pedido por transferencia
-    </button>
-    <p class="store-muted">
-      El pedido no confirma el pago. Espera las instrucciones
-      del vendedor y la confirmación antes de recibir el producto.
-    </p>
-    <p id="k0r1-status" role="status" aria-live="polite"></p>
-  </div>
+<main class="wrap">
+<section class="hero">
+<div>
+<div class="tag">Asistente de escritorio · Windows</div>
+<h1>Controla tu sistema.<br><span class="grad">Entra en modo AURA.</span></h1>
+<p class="lead">K0R1 AURA JARVIS reúne herramientas de diagnóstico y accesos útiles para Windows 11 y gaming en una interfaz inspirada en un panel futurista.</p>
+<div class="actions">
+<a class="btn primary" href="#descarga">Descargar K0R1 ↓</a>
+<a class="btn" href="https://github.com/andresccccccc6-ops/K0R1-AURA-JARVIS2">Ver código fuente</a>
+</div>
+</div>
+<div class="orb" aria-label="K0R1 AURA"><span>K0R1</span></div>
 </section>
 
+<section id="funciones">
+<div class="tag">Módulos del sistema</div>
+<h2 class="heading">Herramientas con propósito</h2>
+<p>Funciones orientadas a revisar el sistema y acceder a configuraciones de forma clara.</p>
+<div class="grid">
+<article class="card"><div class="icon">◈</div><h3>Almacenamiento</h3><p>Consulta el espacio usado y libre en tus unidades.</p></article>
+<article class="card"><div class="icon">⌁</div><h3>Procesos y arranque</h3><p>Revisa procesos activos y programas de inicio.</p></article>
+<article class="card"><div class="icon">⌘</div><h3>Diagnóstico DNS</h3><p>Comprueba la resolución de nombres y la caché DNS.</p></article>
+<article class="card"><div class="icon">▣</div><h3>Ajustes gráficos</h3><p>Accede a la configuración gráfica de Windows.</p></article>
+<article class="card"><div class="icon">◉</div><h3>Windows 11</h3><p>Accesos y diagnósticos para el sistema.</p></article>
+<article class="card"><div class="icon">✧</div><h3>Enfoque gaming</h3><p>Comprobaciones antes de jugar; el rendimiento depende del equipo.</p></article>
+</div>
+</section>
+
+<section id="descarga">
+<div class="tag">Instalación</div>
+<h2 class="heading">Descarga K0R1 AURA</h2>
+<div class="download">
+<div class="panel">
+<h3>Descarga para Windows</h3>
+<p>Usa el botón para descargar el lanzador más reciente desde GitHub Releases.</p>
+<div class="actions">
+<a class="btn primary" href="https://github.com/andresccccccc6-ops/K0R1-AURA-JARVIS2/releases/latest/download/K0R1_AURA_5_NIVELES_DOBLE_CLIC.vbs">⬇ Descargar K0R1</a>
+<a class="btn" href="https://github.com/andresccccccc6-ops/K0R1-AURA-JARVIS2/releases">Ver versiones</a>
+</div>
+<p class="note"><strong>Nombre del archivo:</strong> K0R1_AURA_5_NIVELES_DOBLE_CLIC.vbs</p>
+</div>
+
+<div class="panel">
+<h3>Cómo abrirlo</h3>
+<ol>
+<li>Descarga el lanzador desde el botón.</li>
+<li>Abre la carpeta Descargas.</li>
+<li>Haz doble clic en el archivo VBS.</li>
+<li>Lee y acepta únicamente los avisos de Windows que entiendas y esperes.</li>
+</ol>
+<p class="muted">No necesitas descargar por separado el BAT ni el PS1 antiguos para usar este lanzador.</p>
+</div>
+</div>
+</section>
+
+<section id="seguridad">
+<div class="tag">Transparencia y seguridad</div>
+<h2 class="heading">Antes de ejecutar</h2>
+<p>Revisa el origen y el contenido del programa. No desactives el antivirus ni ignores advertencias inesperadas. Conserva una copia de seguridad. No se garantiza un aumento específico de FPS. Proyecto independiente, no afiliado a Microsoft ni a Epic Games.</p>
+<p class="note">Nota técnica: el archivo VBS es un lanzador, no un EXE nativo. Utiliza Windows PowerShell internamente para iniciar K0R1; no necesitas tener el archivo BAT ni el PS1 separado en Descargas.</p>
+</section>
+</main>
+
+<footer>
+<div class="wrap">© <span id="year"></span> K0R1 AURA JARVIS · Proyecto independiente.</div>
+</footer>
+
 <script>
-(() => {
-  // CAMBIA estos productos y precios por los de tu tienda.
-  const products = [
-    {
-      id: "programa1",
-      name: "K0R1 AURA JARVIS",
-      description: "Programa digital para Windows.",
-      price: 99
-    },
-    {
-      id: "programa2",
-      name: "K0R1 PRO",
-      description: "Edición avanzada. Personaliza esta descripción.",
-      price: 149
-    },
-    {
-      id: "programa3",
-      name: "K0R1 ULTIMATE",
-      description: "Paquete digital. Personaliza esta descripción.",
-      price: 199
-    }
-  ];
-
-  // Sustituye por el correo de contacto de tu tienda.
-  const storeEmail = "TU_CORREO@EJEMPLO.COM";
-  const cart = new Map();
-  const money = amount =>
-    new Intl.NumberFormat("es-MX", {
-      style: "currency",
-      currency: "MXN"
-    }).format(amount);
-
-  const productArea = document.getElementById("k0r1-products");
-  const cartArea = document.getElementById("k0r1-cart");
-  const totalArea = document.getElementById("k0r1-total");
-  const statusArea = document.getElementById("k0r1-status");
-
-  function renderProducts() {
-    productArea.replaceChildren();
-
-    products.forEach(product => {
-      const card = document.createElement("article");
-      card.className = "store-card";
-
-      const title = document.createElement("h3");
-      title.textContent = product.name;
-
-      const description = document.createElement("p");
-      description.className = "store-muted";
-      description.textContent = product.description;
-
-      const price = document.createElement("div");
-      price.className = "store-price";
-      price.textContent = money(product.price);
-
-      const button = document.createElement("button");
-      button.className = "store-btn";
-      button.textContent = "Añadir al carrito";
-      button.addEventListener("click", () => {
-        cart.set(product.id, (cart.get(product.id) || 0) + 1);
-        renderCart();
-      });
-
-      card.append(title, description, price, button);
-      productArea.append(card);
-    });
-  }
-
-  function renderCart() {
-    cartArea.replaceChildren();
-    let total = 0;
-    let count = 0;
-
-    products.forEach(product => {
-      const quantity = cart.get(product.id) || 0;
-      if (!quantity) return;
-
-      count += quantity;
-      total += product.price * quantity;
-
-      const line = document.createElement("div");
-      line.className = "cart-line";
-
-      const info = document.createElement("span");
-      info.textContent =
-        `${product.name} × ${quantity} — ${money(product.price * quantity)}`;
-
-      const controls = document.createElement("span");
-
-      const minus = document.createElement("button");
-      minus.textContent = "−";
-      minus.setAttribute("aria-label", "Quitar una unidad");
-      minus.addEventListener("click", () => {
-        if (quantity <= 1) cart.delete(product.id);
-        else cart.set(product.id, quantity - 1);
-        renderCart();
-      });
-
-      const plus = document.createElement("button");
-      plus.textContent = "+";
-      plus.setAttribute("aria-label", "Añadir una unidad");
-      plus.addEventListener("click", () => {
-        cart.set(product.id, quantity + 1);
-        renderCart();
-      });
-
-      const remove = document.createElement("button");
-      remove.textContent = "Eliminar";
-      remove.addEventListener("click", () => {
-        cart.delete(product.id);
-        renderCart();
-      });
-
-      controls.append(minus, plus, remove);
-      line.append(info, controls);
-      cartArea.append(line);
-    });
-
-    if (count === 0) {
-      const empty = document.createElement("p");
-      empty.className = "store-muted";
-      empty.textContent = "Tu carrito está vacío.";
-      cartArea.append(empty);
-    }
-
-    totalArea.textContent = money(total);
-  }
-
-  document.getElementById("k0r1-order").addEventListener("click", () => {
-    statusArea.textContent = "";
-
-    const name = document.getElementById("k0r1-customer").value.trim();
-    const email = document.getElementById("k0r1-email").value.trim();
-
-    if (!cart.size) {
-      statusArea.textContent = "Añade al menos un producto al carrito.";
-      return;
-    }
-
-    if (!name || !email ||
-        !document.getElementById("k0r1-email").checkValidity()) {
-      statusArea.textContent = "Escribe tu nombre y un correo válido.";
-      return;
-    }
-
-    if (storeEmail === "TU_CORREO@EJEMPLO.COM") {
-      statusArea.textContent =
-        "El vendedor debe configurar el correo de contacto en el código.";
-      return;
-    }
-
-    const lines = products
-      .filter(p => cart.has(p.id))
-      .map(p => `${p.name} x ${cart.get(p.id)} = ${
-        money(p.price * cart.get(p.id))
-      }`);
-
-    const total = products.reduce(
-      (sum, p) => sum + p.price * (cart.get(p.id) || 0), 0
-    );
-
-    const subject = encodeURIComponent("Pedido K0R1 AURA JARVIS");
-    const body = encodeURIComponent(
-      `Pedido de: ${name}\nCorreo: ${email}\n\n` +
-      lines.join("\n") +
-      `\n\nTOTAL: ${money(total)}` +
-      "\n\nSolicito instrucciones para realizar la transferencia bancaria."
-    );
-
-    window.location.href =
-      `mailto:${storeEmail}?subject=${subject}&body=${body}`;
-  });
-
-  renderProducts();
-  renderCart();
-})();
+document.getElementById("year").textContent=new Date().getFullYear();
 </script>
-<!-- FIN DE LA TIENDA K0R1 -->
 </body>
 </html>
-<!-- INICIO CHAT DE PEDIDOS K0R1 -->
-<section id="k0r1-chat" style="max-width:650px;margin:30px auto;padding:22px;background:#101020;color:#fff;border:1px solid #6941c6;border-radius:18px;font-family:Arial,sans-serif">
-  <h2 style="color:#b99aff;margin-top:0">K0R1 · Centro de pedidos</h2>
-  <p>Selecciona el producto que compraste y adjunta tu comprobante.</p>
-
-  <label for="k0r1-producto">Producto solicitado</label>
-  <select id="k0r1-producto" style="display:block;width:100%;padding:12px;margin:8px 0 16px;border-radius:8px">
-    <option value="K0R1 AURA JARVIS">K0R1 AURA JARVIS</option>
-    <option value="K0R1 PRO">K0R1 PRO</option>
-    <option value="K0R1 ULTIMATE">K0R1 ULTIMATE</option>
-  </select>
-
-  <label for="k0r1-correo">Tu correo para recibir respuesta</label>
-  <input id="k0r1-correo" type="email" placeholder="tucorreo@ejemplo.com"
-    style="display:block;box-sizing:border-box;width:100%;padding:12px;margin:8px 0 16px;border-radius:8px">
-
-  <label for="k0r1-comprobante">Foto del comprobante</label>
-  <input id="k0r1-comprobante" type="file" accept="image/*"
-    style="display:block;width:100%;margin:10px 0 16px">
-
-  <button id="k0r1-enviar" type="button"
-    style="width:100%;padding:13px;background:#8055e8;color:white;border:0;border-radius:9px;font-weight:bold;cursor:pointer">
-    Preparar solicitud
-  </button>
-
-  <p id="k0r1-estado" role="status" style="line-height:1.5"></p>
-</section>
-
-<script>
-(() => {
-  const boton = document.getElementById("k0r1-enviar");
-  if (!boton) return;
-
-  boton.addEventListener("click", () => {
-    const producto = document.getElementById("k0r1-producto").value;
-    const correo = document.getElementById("k0r1-correo").value.trim();
-    const archivo = document.getElementById("k0r1-comprobante").files[0];
-    const estado = document.getElementById("k0r1-estado");
-
-    if (!correo || !correo.includes("@")) {
-      estado.textContent = "Escribe un correo válido.";
-      return;
-    }
-
-    if (!archivo || !archivo.type.startsWith("image/")) {
-      estado.textContent = "Selecciona la foto del comprobante.";
-      return;
-    }
-
-    estado.textContent =
-      "Solicitud preparada para: " + producto +
-      ". Aún falta enviar la imagen a un servidor seguro y verificar el pago. " +
-      "No se ha emitido ninguna licencia.";
-  });
-})();
-</script>
-<!-- FIN CHAT DE PEDIDOS K0R1 -->
-</body>
-</html>
-<!-- K0R1 AURA - PANEL WEB MEJORADO -->
-<style>
-#k0r1-panel {
-  --purple: #a855f7;
-  --cyan: #22d3ee;
-  color: #f4f4ff;
-  background: radial-gradient(ellipse at top, #251044, #080b16 70%);
-  padding: 28px 18px;
-  border: 1px solid #49316b;
-  border-radius: 20px;
-  font-family: "Segoe UI", Arial, sans-serif;
-  max-width: 1100px;
-  margin: 30px auto;
-  box-shadow: 0 0 35px #7c3aed20;
-}
-#k0r1-panel * { box-sizing: border-box; }
-#k0r1-panel .k-header {
-  text-align: center;
-  padding: 18px 0 28px;
-}
-#k0r1-panel .k-tag {
-  color: var(--cyan);
-  font-size: 12px;
-  letter-spacing: 4px;
-}
-#k0r1-panel h2 {
-  font-size: clamp(30px, 6vw, 48px);
-  margin: 12px 0;
-  background: linear-gradient(90deg, #c084fc, #22d3ee);
-  color: transparent;
-  background-clip: text;
-}
-#k0r1-panel .k-subtitle {
-  color: #b9b7ce;
-  line-height: 1.6;
-}
-#k0r1-panel .k-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  margin-top: 10px;
-  border: 1px solid #334155;
-  border-radius: 30px;
-  color: #a5f3fc;
-  font-size: 12px;
-}
-#k0r1-panel .k-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #34d399;
-  box-shadow: 0 0 10px #34d399;
-}
-#k0r1-panel .k-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 16px;
-}
-#k0r1-panel .k-card {
-  padding: 22px;
-  border: 1px solid #ffffff16;
-  border-radius: 16px;
-  background: linear-gradient(145deg, #ffffff0b, #ffffff03);
-  transition: transform .2s, border-color .2s;
-}
-#k0r1-panel .k-card:hover {
-  transform: translateY(-4px);
-  border-color: #a855f7;
-}
-#k0r1-panel .k-icon { font-size: 28px; }
-#k0r1-panel h3 { margin: 12px 0 8px; }
-#k0r1-panel .k-desc {
-  color: #b7b5cb;
-  line-height: 1.6;
-  font-size: 14px;
-  min-height: 44px;
-}
-#k0r1-panel .k-button {
-  width: 100%;
-  margin-top: 14px;
-  padding: 12px;
-  border: 1px solid #8b5cf6;
-  border-radius: 10px;
-  color: white;
-  background: #7c3aed22;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background .2s;
-}
-#k0r1-panel .k-button:hover {
-  background: #7c3aed66;
-}
-#k0r1-panel .k-primary {
-  background: linear-gradient(90deg, #7c3aed, #2563eb);
-  border: none;
-}
-#k0r1-panel .k-notice {
-  display: none;
-  padding: 14px;
-  margin-top: 18px;
-  border-radius: 10px;
-  border: 1px solid #475569;
-  background: #0f172a;
-  line-height: 1.6;
-  overflow-wrap: anywhere;
-}
-#k0r1-panel .k-footer {
-  text-align: center;
-  color: #85839c;
-  font-size: 12px;
-  margin-top: 26px;
-}
-</style>
-
-<section id="k0r1-panel">
-  <header class="k-header">
-    <div class="k-tag">NEXT-GEN CONTROL INTERFACE</div>
-    <h2>K0R1 AURA</h2>
-    <p class="k-subtitle">
-      Tu centro de control. Accede a tus herramientas,
-      explora las versiones y consulta el estado del sistema.
-    </p>
-    <div class="k-status">
-      <span class="k-dot"></span>
-      INTERFAZ WEB ACTIVA
-    </div>
-  </header>
-
-  <div class="k-grid">
-    <article class="k-card">
-      <div class="k-icon">🤖</div>
-      <h3>AURA JARVIS</h3>
-      <p class="k-desc">Explora las funciones del asistente y sus herramientas.</p>
-      <button class="k-button" data-message="AURA JARVIS">
-        Explorar AURA
-      </button>
-    </article>
-
-    <article class="k-card">
-      <div class="k-icon">⚡</div>
-      <h3>K0R1 PRO</h3>
-      <p class="k-desc">Consulta las funciones disponibles de la versión PRO.</p>
-      <button class="k-button" data-message="K0R1 PRO">
-        Ver PRO
-      </button>
-    </article>
-
-    <article class="k-card">
-      <div class="k-icon">👑</div>
-      <h3>K0R1 ULTIMATE</h3>
-      <p class="k-desc">Descubre la edición completa y sus características.</p>
-      <button class="k-button" data-message="K0R1 ULTIMATE">
-        Ver ULTIMATE
-      </button>
-    </article>
-
-    <article class="k-card">
-      <div class="k-icon">🆓</div>
-      <h3>Versión gratuita</h3>
-      <p class="k-desc">Consulta las funciones gratuitas disponibles para empezar.</p>
-      <button class="k-button" data-message="Versión gratuita">
-        Explorar gratis
-      </button>
-    </article>
-  </div>
-
-  <div id="k0r1-notice" class="k-notice" role="status" aria-live="polite"></div>
-
-  <footer class="k-footer">
-    K0R1 AURA · PANEL WEB · La disponibilidad de funciones depende de tu versión.
-  </footer>
-</section>
-
-<script>
-(() => {
-  const panel = document.getElementById("k0r1-panel");
-  if (!panel || panel.dataset.ready) return;
-  panel.dataset.ready = "true";
-
-  const notice = panel.querySelector("#k0r1-notice");
-
-  panel.querySelectorAll("[data-message]").forEach(button => {
-    button.addEventListener("click", () => {
-      const product = button.dataset.message;
-      notice.style.display = "block";
-      notice.textContent =
-        product + ": has seleccionado esta sección. " +
-        "Este panel es visual; conecta aquí la función real de tu app para activarla.";
-      notice.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    });
-  });
-})();
-</script></body>
-</html>
-<!-- K0R1 AURA | INTERFAZ FUTURISTA -->
-<style>
-#k0r1-aura {
-  --bg:#050817; --panel:#080e20; --purple:#a855f7;
-  --blue:#00c8ff; --cyan:#22d3ee; --text:#f5f3ff;
-  background:radial-gradient(ellipse at 50% 0%,#211044 0%,var(--bg) 65%);
-  color:var(--text); padding:24px; border:1px solid #30205d;
-  border-radius:18px; font-family:Segoe UI,Arial,sans-serif;
-  max-width:1400px; margin:25px auto; overflow:hidden;
-}
-#k0r1-aura * {box-sizing:border-box}
-#k0r1-aura button,#k0r1-aura input,#k0r1-aura select {font:inherit}
-#k0r1-aura button {cursor:pointer}
-#k0r1-aura .ka-nav {
-  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
-  gap:14px; padding:12px 0 22px; border-bottom:1px solid #35216b;
-}
-#k0r1-aura .ka-logo {
-  font-size:34px; font-weight:900; letter-spacing:2px;
-  color:#c084fc; text-shadow:0 0 18px #9333ea;
-}
-#k0r1-aura .ka-links {display:flex; flex-wrap:wrap; gap:8px}
-#k0r1-aura .ka-links button {
-  color:#dbeafe; background:transparent; border:0;
-  padding:10px 12px; border-radius:8px;
-}
-#k0r1-aura .ka-links button:hover {background:#7c3aed33}
-#k0r1-aura .ka-hero {
-  display:grid; grid-template-columns:1.3fr .8fr; gap:25px;
-  align-items:center; padding:38px 12px;
-}
-#k0r1-aura .ka-kicker {color:var(--cyan);letter-spacing:4px;font-size:12px}
-#k0r1-aura .ka-hero h1 {
-  font-size:clamp(38px,6vw,72px); margin:12px 0;
-  line-height:1.05; background:linear-gradient(90deg,#fff,#c084fc,#00c8ff);
-  color:transparent; background-clip:text;
-}
-#k0r1-aura .ka-hero h2 {font-size:21px;margin:12px 0}
-#k0r1-aura .ka-muted {color:#b9c6e5;line-height:1.7}
-#k0r1-aura .ka-actions {display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
-#k0r1-aura .ka-btn {
-  border:1px solid #5941a7;border-radius:12px;padding:12px 18px;
-  background:#10152d;color:white;
-}
-#k0r1-aura .ka-main {
-  background:linear-gradient(90deg,#9333ea,#4f46e5);
-  border:0;box-shadow:0 0 22px #7c3aed66;font-weight:700;
-}
-#k0r1-aura .ka-orb {
-  width:min(260px,70vw);aspect-ratio:1;border-radius:50%;margin:auto;
-  display:grid;place-items:center;text-align:center;
-  border:2px solid #4938ff;
-  background:radial-gradient(circle,#152c68,#090b20 68%);
-  box-shadow:0 0 22px #6d28d9, inset 0 0 35px #075985;
-}
-#k0r1-aura .ka-orb strong {font-size:42px;color:#c4b5fd;text-shadow:0 0 20px #8b5cf6}
-#k0r1-aura .ka-orb span {display:block;color:#22d3ee;letter-spacing:4px}
-#k0r1-aura .ka-section {
-  border:1px solid #4931a1;border-radius:16px;padding:20px;margin:10px 0 18px;
-  background:#080d1cbb;
-}
-#k0r1-aura .ka-section-title {
-  display:flex;justify-content:space-between;align-items:center;
-  gap:10px;flex-wrap:wrap;margin-bottom:18px;
-}
-#k0r1-aura .ka-section-title h2 {font-size:20px;color:#c084fc;margin:0}
-#k0r1-aura .ka-grid {
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;
-}
-#k0r1-aura .ka-card {
-  padding:18px;border:1px solid #a855f7;border-radius:14px;
-  background:linear-gradient(145deg,#1a1037,#070d1d);
-  display:flex;flex-direction:column;min-width:0;
-}
-#k0r1-aura .ka-card:nth-child(2){border-color:#00c8ff}
-#k0r1-aura .ka-card:nth-child(3){border-color:#fbbf24;background:linear-gradient(145deg,#211b0a,#080d1d)}
-#k0r1-aura .ka-card:nth-child(4){border-color:#00e5d4}
-#k0r1-aura .ka-icon {font-size:30px}
-#k0r1-aura .ka-card h3 {margin:12px 0 6px}
-#k0r1-aura .ka-card p {font-size:13px;color:#c1cbe4;line-height:1.6}
-#k0r1-aura .ka-features {font-size:13px;line-height:2;color:#dbeafe;padding-left:18px}
-#k0r1-aura .ka-card .ka-btn {margin-top:auto}
-#k0r1-aura .ka-order {
-  display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center;
-  border-color:#6d28d9;
-}
-#k0r1-aura .ka-art {
-  min-height:210px;display:grid;place-items:center;text-align:center;
-  border-radius:12px;background:radial-gradient(circle,#28104b,#080d1d 70%);
-  color:#c084fc;font-size:54px;
-}
-#k0r1-aura .ka-form {
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
-}
-#k0r1-aura .ka-field label {display:block;font-size:12px;margin-bottom:7px;color:#dbeafe}
-#k0r1-aura .ka-field input,#k0r1-aura .ka-field select {
-  width:100%;min-width:0;padding:12px;border:1px solid #344b8b;
-  border-radius:8px;background:#080f26;color:white;
-}
-#k0r1-aura .ka-wide {grid-column:1/-1}
-#k0r1-aura .ka-notice {
-  display:none;margin-top:12px;padding:14px;border:1px solid #087ca4;
-  border-radius:10px;background:#06192b;color:#a5f3fc;line-height:1.6;
-  overflow-wrap:anywhere;
-}
-#k0r1-aura .ka-footer {text-align:center;color:#8994b4;font-size:12px;padding:22px 0 4px}
-@media(max-width:850px) {
-  #k0r1-aura .ka-hero {grid-template-columns:1fr}
-  #k0r1-aura .ka-orb {width:190px}
-  #k0r1-aura .ka-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
-  #k0r1-aura .ka-order {grid-template-columns:1fr}
-  #k0r1-aura .ka-art {min-height:100px}
-}
-@media(max-width:520px) {
-  #k0r1-aura {padding:14px}
-  #k0r1-aura .ka-grid,#k0r1-aura .ka-form {grid-template-columns:1fr}
-  #k0r1-aura .ka-wide {grid-column:auto}
-  #k0r1-aura .ka-links {width:100%}
-}
-</style>
-
-<section id="k0r1-aura">
-  <nav class="ka-nav">
-    <div class="ka-logo">♛ K0R1</div>
-    <div class="ka-links">
-      <button data-target="ka-home">⌂ Inicio</button>
-      <button data-target="ka-store">🛒 Tienda</button>
-      <button data-target="ka-features">⚙ Funciones</button>
-      <button data-target="ka-order">◉ Pedidos</button>
-    </div>
-  </nav>
-
-  <header class="ka-hero" id="ka-home">
-    <div>
-      <div class="ka-kicker">♛ BIENVENIDO A</div>
-      <h1>K0R1 AURA</h1>
-      <h2>Tu asistente inteligente, todo en uno.</h2>
-      <p class="ka-muted">
-        Explora las herramientas de K0R1 y encuentra la versión
-        que mejor se adapte a tus necesidades.
-      </p>
-      <div class="ka-actions">
-        <button class="ka-btn ka-main" data-target="ka-store">🚀 Comenzar ahora →</button>
-        <button class="ka-btn" data-message="Añade aquí el enlace de tu tutorial.">▶ Ver tutorial</button>
-      </div>
-    </div>
-    <div class="ka-orb"><div><strong>♛ K0R1</strong><span>A U R A</span></div></div>
-  </header>
-
-  <section class="ka-section" id="ka-store">
-    <div class="ka-section-title">
-      <h2>🚀 NUESTRAS VERSIONES</h2>
-      <span class="ka-muted">Elige tu edición</span>
-    </div>
-    <div class="ka-grid">
-      <article class="ka-card">
-        <div class="ka-icon">🤖</div><h3>AURA JARVIS</h3>
-        <p>Tu asistente personal con IA.</p>
-        <ul class="ka-features"><li>Comandos de voz</li><li>Herramientas inteligentes</li><li>Soporte</li></ul>
-        <button class="ka-btn" data-product="AURA JARVIS">Conoce más →</button>
-      </article>
-      <article class="ka-card">
-        <div class="ka-icon">⚡</div><h3>K0R1 PRO</h3>
-        <p>Más potencia y control.</p>
-        <ul class="ka-features"><li>Funciones de AURA</li><li>Herramientas avanzadas</li><li>Opciones adicionales</li></ul>
-        <button class="ka-btn" data-product="K0R1 PRO">Conoce más →</button>
-      </article>
-      <article class="ka-card">
-        <div class="ka-icon">👑</div><h3>K0R1 ULTIMATE</h3>
-        <p>La experiencia completa.</p>
-        <ul class="ka-features"><li>Funciones PRO</li><li>Opciones avanzadas</li><li>Soporte prioritario</li></ul>
-        <button class="ka-btn" data-product="K0R1 ULTIMATE">Conoce más →</button>
-      </article>
-      <article class="ka-card">
-        <div class="ka-icon">🎁</div><h3>Versión gratuita</h3>
-        <p>Empieza con las funciones básicas.</p>
-        <ul class="ka-features"><li>Funciones gratuitas</li><li>Herramientas básicas</li><li>Acceso inicial</li></ul>
-        <button class="ka-btn" data-product="Versión gratuita">Explorar gratis →</button>
-      </article>
-    </div>
-  </section>
-
-  <section class="ka-section" id="ka-features">
-    <div class="ka-section-title"><h2>⚙ CENTRO DE CONTROL</h2></div>
-    <p class="ka-muted">Panel web de K0R1 AURA. Las funciones del sistema deben conectarse por separado.</p>
-    <div class="ka-actions">
-      <button class="ka-btn" data-message="Esta sección necesita conectarse a la función real de tu app.">🤖 Asistente</button>
-      <button class="ka-btn" data-message="Esta sección necesita integrarse con herramientas reales de Windows.">⚡ Herramientas</button>
-      <button class="ka-btn" data-message="No se ejecutan optimizaciones del PC desde esta página web.">🎮 Modo competitivo</button>
-    </div>
-  </section>
-
-  <section class="ka-section ka-order" id="ka-order">
-    <div class="ka-art">◈<br/><span style="font-size:18px">K0R1 AURA</span></div>
-    <div>
-      <div class="ka-section-title"><h2>◉ CENTRO DE PEDIDOS</h2></div>
-      <p class="ka-muted">Selecciona el producto y prepara tu solicitud.</p>
-      <form id="ka-order-form" class="ka-form">
-        <div class="ka-field">
-          <label for="ka-product">Producto solicitado</label>
-          <select id="ka-product" required>
-            <option>AURA JARVIS</option><option>K0R1 PRO</option>
-            <option>K0R1 ULTIMATE</option><option>Versión gratuita</option>
-          </select>
-        </div>
-        <div class="ka-field">
-          <label for="ka-email">Tu correo</label>
-          <input id="ka-email" type="email" placeholder="tu@correo.com" required/>
-        </div>
-        <div class="ka-field">
-          <label for="ka-receipt">Comprobante (si corresponde)</label>
-          <input id="ka-receipt" type="file" accept="image/*"/>
-        </div>
-        <button class="ka-btn ka-main ka-wide" type="submit">➤ Preparar solicitud</button>
-      </form>
-      <div id="ka-notice" class="ka-notice" role="status" aria-live="polite"></div>
-    </div>
-  </section>
-
-  <footer class="ka-footer">K0R1 AURA · INTERFAZ WEB · Seguridad · Rendimiento</footer>
-</section>
-
-<script>
-(() => {
-  const root = document.getElementById("k0r1-aura");
-  if (!root || root.dataset.initialized) return;
-  root.dataset.initialized = "1";
-
-  const notice = root.querySelector("#ka-notice");
-  const showNotice = message => {
-    notice.textContent = message;
-    notice.style.display = "block";
-  };
-
-  root.querySelectorAll("[data-target]").forEach(button => {
-    button.addEventListener("click", () => {
-      const target = root.querySelector("#" + button.dataset.target);
-      if (target) target.scrollIntoView({behavior:"smooth",block:"start"});
-    });
-  });
-
-  root.querySelectorAll("[data-product]").forEach(button => {
-    button.addEventListener("click", () => {
-      root.querySelector("#ka-product").value = button.dataset.product;
-      root.querySelector("#ka-order").scrollIntoView({behavior:"smooth"});
-    });
-  });
-
-  root.querySelectorAll("[data-message]").forEach(button => {
-    button.addEventListener("click", () => showNotice(button.dataset.message));
-  });
-
-  root.querySelector("#ka-order-form").addEventListener("submit", event => {
-    event.preventDefault();
-    const product = root.querySelector("#ka-product").value;
-    const email = root.querySelector("#ka-email").value.trim();
-    const receipt = root.querySelector("#ka-receipt").files[0];
-
-    if (product !== "Versión gratuita" && !receipt) {
-      showNotice("Selecciona el comprobante para preparar la solicitud. Todavía no se ha enviado ni verificado ningún pago.");
-      return;
-    }
-    if (receipt && !receipt.type.startsWith("image/")) {
-      showNotice("Selecciona un archivo de imagen válido.");
-      return;
-    }
-    showNotice(
-      "Solicitud preparada para " + product + ". Correo: " + email +
-      ". Esta página no envía archivos, no confirma pagos y no entrega licencias automáticamente."
-    );
-  });
-})();
-</script>
-<!-- FIN DEL PANEL K0R1 -->
-
-<!-- FIN PANEL K0R1 AURA -->
-</body>
-</html>
-<!-- K0R1 AURA - HUD NEON ADD-ON -->
-<style>
-#k0r1-hud {
-  --violet: #a855f7;
-  --electric: #2563ff;
-  --cyan: #22d3ee;
-  margin: 24px auto;
-  padding: 22px;
-  max-width: 1200px;
-  color: #eef2ff;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background:
-    radial-gradient(ellipse at 10% 0%, #32105b88, transparent 45%),
-    radial-gradient(ellipse at 100% 100%, #063b6b55, transparent 40%),
-    #050817;
-  border: 1px solid #6439a8;
-  border-radius: 18px;
-  box-shadow: 0 0 25px #7c3aed22;
-}
-#k0r1-hud * { box-sizing: border-box; }
-#k0r1-hud .hud-top {
-  display:flex; justify-content:space-between; align-items:center;
-  flex-wrap:wrap; gap:14px; padding-bottom:18px;
-  border-bottom:1px solid #39265e;
-}
-#k0r1-hud .hud-brand {
-  font-size:26px; font-weight:900; letter-spacing:3px;
-  color:#c084fc; text-shadow:0 0 18px #9333ea;
-}
-#k0r1-hud .hud-live {
-  color:#5eead4; font-size:12px; letter-spacing:1px;
-}
-#k0r1-hud .hud-live:before {
-  content:""; display:inline-block; width:8px; height:8px;
-  margin-right:8px; border-radius:50%; background:#34d399;
-  box-shadow:0 0 12px #34d399;
-}
-#k0r1-hud .hud-hero {
-  display:grid; grid-template-columns:1fr 1fr; align-items:center;
-  gap:24px; padding:30px 4px;
-}
-#k0r1-hud .hud-eyebrow {
-  font-size:11px; color:var(--cyan); letter-spacing:4px;
-}
-#k0r1-hud h2 {
-  font-size:clamp(32px,6vw,58px); line-height:1.05;
-  margin:12px 0;
-  background:linear-gradient(90deg,#fff,#c084fc,#22d3ee);
-  color:transparent; background-clip:text;
-}
-#k0r1-hud p { color:#b8c6e8; line-height:1.7; }
-#k0r1-hud .hud-orb {
-  width:min(230px,65vw); aspect-ratio:1; margin:auto;
-  display:grid; place-items:center; border-radius:50%;
-  border:2px solid #4f46e5;
-  background:radial-gradient(circle,#172554,#080b1a 68%);
-  box-shadow:0 0 25px #7c3aed, inset 0 0 25px #0891b2;
-  animation:hud-pulse 4s ease-in-out infinite;
-}
-#k0r1-hud .hud-orb span {
-  font-size:36px; font-weight:900; color:#c4b5fd;
-  text-shadow:0 0 18px #8b5cf6;
-}
-#k0r1-hud .hud-orb small {
-  display:block; text-align:center; color:#22d3ee;
-  letter-spacing:5px; font-size:11px;
-}
-#k0r1-hud .hud-stats {
-  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px;
-}
-#k0r1-hud .hud-stat {
-  padding:16px; border:1px solid #344b87;
-  border-radius:12px; background:#0a1125;
-}
-#k0r1-hud .hud-stat small { color:#9caed2; display:block; }
-#k0r1-hud .hud-stat strong {
-  display:block; margin-top:8px; color:#67e8f9; font-size:19px;
-}
-#k0r1-hud .hud-actions {
-  display:flex; flex-wrap:wrap; gap:10px; margin:22px 0;
-}
-#k0r1-hud button {
-  color:#f8fafc; background:#10152d; border:1px solid #6444ba;
-  border-radius:10px; padding:12px 16px; cursor:pointer;
-  transition:transform .2s, box-shadow .2s, background .2s;
-}
-#k0r1-hud button:hover {
-  transform:translateY(-2px); background:#31205b;
-  box-shadow:0 0 16px #7c3aed55;
-}
-#k0r1-hud .hud-primary {
-  background:linear-gradient(90deg,#7c3aed,#2563eb);
-  border:0; font-weight:700;
-}
-#k0r1-hud .hud-output {
-  min-height:52px; padding:14px; border:1px solid #164e83;
-  border-radius:10px; background:#07172b; color:#a5f3fc;
-  overflow-wrap:anywhere; line-height:1.6;
-}
-#k0r1-hud .hud-bottom {
-  margin-top:18px; color:#7f8eb2; font-size:11px;
-  text-align:center;
-}
-@keyframes hud-pulse {
-  0%,100% { transform:scale(1); box-shadow:0 0 22px #7c3aed66,inset 0 0 25px #0891b255; }
-  50% { transform:scale(1.025); box-shadow:0 0 34px #2563eb99,inset 0 0 35px #0891b277; }
-}
-@media(max-width:650px) {
-  #k0r1-hud { padding:15px; }
-  #k0r1-hud .hud-hero { grid-template-columns:1fr; }
-  #k0r1-hud .hud-stats { grid-template-columns:1fr; }
-}
-@media(prefers-reduced-motion:reduce) {
-  #k0r1-hud .hud-orb { animation:none; }
-  #k0r1-hud button { transition:none; }
-}
-</style>
-
-<section id="k0r1-hud">
-  <header class="hud-top">
-    <div class="hud-brand">♛ K0R1 AURA</div>
-    <div class="hud-live">INTERFAZ WEB ACTIVA</div>
-    <div id="hud-clock">--:--:--</div>
-  </header>
-
-  <div class="hud-hero">
-    <div>
-      <div class="hud-eyebrow">PERSONAL CONTROL INTERFACE</div>
-      <h2>EL FUTURO<br>ES AHORA.</h2>
-      <p>
-        Un centro de control con estilo futurista,
-        accesos rápidos y herramientas de K0R1.
-      </p>
-      <div class="hud-actions">
-        <button class="hud-primary" data-hud="versiones">Explorar versiones ↗</button>
-        <button data-hud="hora">Actualizar reloj ⟳</button>
-      </div>
-    </div>
-    <div class="hud-orb">
-      <div><span>K0R1</span><small>A U R A</small></div>
-    </div>
-  </div>
-
-  <div class="hud-stats">
-    <div class="hud-stat">
-      <small>ESTADO DE LA INTERFAZ</small>
-      <strong>EN LÍNEA</strong>
-    </div>
-    <div class="hud-stat">
-      <small>HORA LOCAL DEL NAVEGADOR</small>
-      <strong id="hud-time">--:--:--</strong>
-    </div>
-    <div class="hud-stat">
-      <small>EDICIÓN</small>
-      <strong>AURA WEB</strong>
-    </div>
-  </div>
-
-  <div style="margin-top:20px">
-    <div class="hud-eyebrow" style="margin-bottom:12px">ACCESOS RÁPIDOS</div>
-    <div class="hud-actions">
-      <button data-hud="tienda">🛒 Tienda</button>
-      <button data-hud="funciones">⚙ Funciones</button>
-      <button data-hud="pedidos">◈ Pedidos</button>
-      <button data-hud="arriba">↑ Inicio</button>
-    </div>
-  </div>
-
-  <div id="hud-output" class="hud-output" role="status" aria-live="polite">
-    K0R1 listo. Selecciona un acceso rápido.
-  </div>
-  <footer class="hud-bottom">
-    K0R1 AURA · PANEL HUD · Diseño adaptable
-  </footer>
-</section>
-
-<script>
-(() => {
-  const hud = document.getElementById("k0r1-hud");
-  if (!hud || hud.dataset.ready) return;
-  hud.dataset.ready = "1";
-
-  const output = hud.querySelector("#hud-output");
-
-  function updateClock() {
-    const now = new Date().toLocaleTimeString();
-    hud.querySelector("#hud-clock").textContent = now;
-    hud.querySelector("#hud-time").textContent = now;
-  }
-  updateClock();
-  hud.querySelector('[data-hud="hora"]').addEventListener("click", () => {
-    updateClock();
-    output.textContent = "Reloj actualizado con la hora local de tu navegador.";
-  });
-
-  const targets = {
-    versiones: ["ka-store", "Sección de versiones"],
-    tienda: ["ka-store", "Tienda"],
-    funciones: ["ka-features", "Funciones"],
-    pedidos: ["ka-order", "Centro de pedidos"],
-    arriba: ["k0r1-aura", "Inicio de K0R1"]
-  };
-
-  hud.querySelectorAll("[data-hud]").forEach(button => {
-    if (button.dataset.hud === "hora") return;
-    button.addEventListener("click", () => {
-      const item = targets[button.dataset.hud];
-      const target = item && document.getElementById(item[0]);
-      if (target) {
-        target.scrollIntoView({behavior:"smooth", block:"start"});
-        output.textContent = "Abriendo sección: " + item[1] + ".";
-      } else {
-        output.textContent =
-          "Acceso seleccionado: " + button.textContent.trim() +
-          ". Si no existe esa sección en tu página, conecta el botón a su sección real.";
-      }
-    });
-  });
-})();
-</script>
-<!-- FIN K0R1 HUD ADD-ON -->
 
